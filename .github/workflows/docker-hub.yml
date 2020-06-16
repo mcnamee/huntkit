@@ -2,11 +2,7 @@ name: Build & Push to Dockerhub
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+    tags:
 
 jobs:
   build:
@@ -21,4 +17,5 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: mcnamee/pentest-toolkit
-        tags: latest
+        tag_with_ref: true
+        push: ${{ startsWith(github.ref, 'refs/tags/') }}
