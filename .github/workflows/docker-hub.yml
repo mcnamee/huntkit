@@ -10,6 +10,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
+    - uses: actions/checkout@v2
 
     - name: Build & Push to Dockerhub
       uses: docker/build-push-action@v1
