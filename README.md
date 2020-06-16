@@ -11,11 +11,11 @@
   </sup>
   <br />
   <p align="center">
-    <a href="#-intro"><b>What is this?</b></a>
+    <a href="#intro"><b>What is this?</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
-    <a href="#-instructions"><b>Instructions</b></a>
+    <a href="#instructions"><b>Instructions</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
-    <a href="#-tools"><b>Tools</b></a>
+    <a href="#tools"><b>Tools</b></a>
   </p>
   <br />
 </div>
