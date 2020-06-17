@@ -2,7 +2,7 @@
   <h1>Pen Test Toolkit</h1>
   <p></p>
   <sup>
-    <a href="https://github.com/s0md3v/XSStrike/releases">
+    <a href="https://github.com/mcnamee/pentest-toolkit/releases">
       <img src="https://img.shields.io/github/release/mcnamee/pentest-toolkit.svg">
     </a>
     <a href="https://github.com/mcnamee/pentest-toolkit/actions">
