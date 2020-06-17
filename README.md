@@ -32,7 +32,12 @@ I got sick of waiting for VitualBox to boot, Kali to boot, then dealing with the
 
 ```bash
 # ••• Run from Docker Hub •••
-docker run -it mcnamee/pentest-toolkit /bin/zsh
+docker run -it mcnamee/pentest-toolkit
+
+# --- OR ---
+
+# ••• Run from Docker Hub and mount a folder (to access a folder from within) •••
+ docker run -itv ~/Projects:/root/projects mcnamee/pentest-toolkit
 
 # --- OR ---
 
@@ -41,7 +46,7 @@ docker run -it mcnamee/pentest-toolkit /bin/zsh
 # 2. Build the image
 docker build . -t mcnamee/pentest-toolkit
 # 3. Run
-docker run -it mcnamee/pentest-toolkit /bin/zsh
+docker run -it mcnamee/pentest-toolkit
 ```
 
 ## Tools

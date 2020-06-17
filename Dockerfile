@@ -204,15 +204,16 @@ RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git ${WORDLI
 
 # Symlink wordlists
 RUN ln -s /root/tools/theHarvester/wordlists ${WORDLISTS}/theharvester && \
-  ln -s /usr/share/dirb/wordlists ${WORDLISTS}/dirb && \
-  ln -s /root/tools/knock/knockpy/wordlist ${WORDLISTS}/knockpy
+  ln -s /usr/share/dirb/wordlists ${WORDLISTS}/dirb
 
 # Command line updates
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+  -t ${ZSH_THEME} \
   chsh -s $(which zsh)
 
 # Cleanup
 RUN apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
-CMD ["zsh"]
+ENTRYPOINT [ "/bin/zsh" ]
+CMD ["-l"]
