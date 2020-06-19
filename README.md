@@ -54,7 +54,7 @@ docker run -it mcnamee/pentest-toolkit
 
 ## Tools
 
-### Information Gathering - General
+### Information Gathering
 
 | Tool | Description & Example |
 | --- | --- |
@@ -70,7 +70,7 @@ docker run -it mcnamee/pentest-toolkit
 | [theharvester](https://tools.kali.org/information-gathering/theharvester) | _Gather emails, subdomains, hosts, employee names, open ports and banners from different public sources like search engines, PGP key servers and SHODAN computer database._ <br> `cd $TOOLS/theharvester/` <br> <code>theharvester -d kali.org -b "bing, certspotter, dnsdumpster, dogpile, duckduckgo, google, hunter, linkedin, linkedin_links, twitter, yahoo"</code> |
 | [virtual-host-discovery](https://github.com/jobertabma/virtual-host-discovery) | _HTTP scanner that'll enumerate virtual hosts on a given IP address._ <br> `cd $TOOLS/virtual-host-discovery` <br>`ruby scan.rb --ip=157.245.155.29 --host=resound.ly` |
 
-### Information Gathering - Web Application
+### Web Application Specific
 
 | Tool | Description & Example |
 | --- | --- |
@@ -87,7 +87,7 @@ docker run -it mcnamee/pentest-toolkit
 
 | Tool | Description & Example |
 | --- | --- |
-| [commix](https://github.com/commixproject/commix) | `commix --help` |
+| [commix](https://github.com/commixproject/commix) | _Command injection exploiter - used to test web applications with the view to find bugs, errors or vulnerabilities related to command injection attacks._ <br> `commix --url="http://192.168.0.23/commix-testbed/scenarios/referer/referer(classic).php" --level=3` |
 | [hydra](https://tools.kali.org/password-attacks/hydra) | <code>hydra -f -l email@admin.com -P $WORDLISTS/seclists/Passwords/darkweb2017-top1000.txt http-post-form "/login:user=^USER^&pass=^PASS^:Failed" website.com</code> |
 | [sqlmap](http://sqlmap.org/) | `sqlmap -u https://example.com --forms --crawl=10 --level=5 --risk=3` |
 
