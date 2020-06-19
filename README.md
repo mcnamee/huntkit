@@ -3,10 +3,9 @@
   <p></p>
   <sup>
     <a href="https://github.com/mcnamee/pentest-toolkit/releases">
-      <img src="https://badge.fury.io/gh/mcnamee%2Fpentest-toolkit@2x.png">
+      <img src="https://d25lcipzij17d.cloudfront.net/badge.png?id=gh&type=3d&v=0.2.0">
     </a>
     <a href="https://github.com/mcnamee/pentest-toolkit/actions">
-      <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fmcnamee%2Fpentest-toolkit%2Fbadge%3Fref%3Dmaster&style=flat" alt="builds" />
       <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fmcnamee%2Fpentest-toolkit%2Fbadge%3Fref%3D0.2.0&style=flat" />
     </a>
     <a href="/LICENSE">
