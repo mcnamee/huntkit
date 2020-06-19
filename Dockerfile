@@ -141,6 +141,10 @@ RUN git clone --depth 1 https://github.com/rezasp/joomscan.git ${TOOLS}/joomscan
   chmod +x joomscan.pl && \
   ln -sf ${TOOLS}/joomscan/joomscan.pl /usr/local/bin/joomscan
 
+# metasploit
+RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
+  chmod 755 msfinstall && ./msfinstall
+
 # recon-ng
 RUN git clone --depth 1 https://github.com/lanmaster53/recon-ng.git ${TOOLS}/recon-ng && \
   cd ${TOOLS}/recon-ng && \
