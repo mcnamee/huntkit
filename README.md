@@ -3,10 +3,11 @@
   <p></p>
   <sup>
     <a href="https://github.com/mcnamee/pentest-toolkit/releases">
-      <img src="https://img.shields.io/github/release/mcnamee/pentest-toolkit.svg">
+      <img src="https://badge.fury.io/gh/mcnamee%2Fpentest-toolkit@2x.png">
     </a>
     <a href="https://github.com/mcnamee/pentest-toolkit/actions">
       <img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fmcnamee%2Fpentest-toolkit%2Fbadge%3Fref%3Dmaster&style=flat" alt="builds" />
+      <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fmcnamee%2Fpentest-toolkit%2Fbadge%3Fref%3D0.2.0&style=flat" />
     </a>
     <a href="/LICENSE">
       <img src="https://img.shields.io/github/license/mcnamee/pentest-toolkit?style=flat-square" alt="license" />
@@ -76,7 +77,6 @@ docker run -it mcnamee/pentest-toolkit
 | --- | --- |
 | [dirb](https://tools.kali.org/web-applications/dirb) | _Looks for existing (and/or hidden) Web Objects, by launching a dictionary based attack against a web server and analyzing the response._ <br> `dirb https://kali.org $WORDLISTS/seclists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt` |
 | [dirsearch](https://github.com/maurosoria/dirsearch) | _Brute forcees directories and files in websites to find things you might be interested in._ <br> <code>dirsearch -u kali.org -w $WORDLISTS/seclists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt -e php</code> |
-| [joomscan](https://github.com/rezasp/joomscan) | _Vulnerability detection for Joomla CMS._ <br> `perl ~/tools/joomscan/joomscan.pl` |
 | [nikto](https://tools.kali.org/information-gathering/nikto) | _Web server scanner which performs comprehensive tests against web servers for multiple items (dangerous files, outdated dependencies...)._ <br> `nikto -host=https://kali.org` |
 | [wafw00f](https://github.com/enablesecurity/wafw00f) | _Web Application Firewall Fingerprinting Tool._ <br> `wafw00f resound.ly` |
 | [whatweb](https://github.com/urbanadventurer/WhatWeb) | _Scans websites and highlights the CMS used, JavaScript libraries, web servers, version numbers, email addresses, account IDs, web framework modules, SQL errors, and more._ <br> `whatweb kali.org` |
