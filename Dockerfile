@@ -152,6 +152,12 @@ RUN git clone --depth 1 https://github.com/lanmaster53/recon-ng.git ${TOOLS}/rec
   chmod +x recon-ng && \
   ln -sf ${TOOLS}/recon-ng/recon-ng /usr/local/bin/recon-ng
 
+# social engineer toolkit
+RUN git clone https://github.com/trustedsec/social-engineer-toolkit ${TOOLS}/setoolkit && \
+  cd ${TOOLS}/setoolkit && \
+  python3 -m pip install -r requirements.txt && \
+  python setup.py
+
 # subfinder
 RUN go get -v github.com/projectdiscovery/subfinder/cmd/subfinder
 
