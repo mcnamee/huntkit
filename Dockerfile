@@ -122,6 +122,11 @@ RUN git clone --depth 1 https://github.com/fwaeytens/dnsenum.git ${TOOLS}/dnsenu
   chmod +x dnsenum.pl && \
   ln -s ${TOOLS}/dnsenum/dnsenum.pl /usr/bin/dnsenum
 
+# exploitdb (searchsploit)
+RUN git clone https://github.com/offensive-security/exploitdb.git ${TOOLS}/exploitdb && \
+  cd ${TOOLS}/exploitdb && \
+  ln -s ${TOOLS}/exploitdb/searchsploit /usr/bin/searchsploit
+
 # fierce
 RUN python3 -m pip install fierce
 
