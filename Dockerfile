@@ -10,7 +10,6 @@ ENV GO111MODULE=on
 ENV GOROOT=/usr/local/go
 ENV GOPATH=/root/go
 ENV PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
-ENV ZSH_THEME agnoster
 
 # Create working dirs
 WORKDIR /root
@@ -74,17 +73,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install go
 RUN cd /opt && \
-    wget https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz && \
-    tar -xvf go1.13.3.linux-amd64.tar.gz && \
-    rm -rf /opt/go1.13.3.linux-amd64.tar.gz && \
+    wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz && \
+    tar -xvf go1.14.4.linux-amd64.tar.gz && \
+    rm -rf /opt/go1.14.4.linux-amd64.tar.gz && \
     mv go /usr/local
 
 # Install Python common dependencies
 RUN python3 -m pip install --upgrade setuptools wheel
-
-# Set timezone
-RUN ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
-  dpkg-reconfigure --frontend noninteractive tzdata
 
 # ------------------------------
 # Tools
@@ -199,16 +194,27 @@ RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git ${TOOLS}/xsstrike
   chmod +x xsstrike.py && \
   ln -sf ${TOOLS}/xsstrike/xsstrike.py /usr/local/bin/xsstrike
 
+# ------------------------------
+# Wordlists
+# ------------------------------
+
 # seclists
 RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git ${WORDLISTS}/seclists
 
-# Symlink wordlists
+# Symlink other wordlists
 RUN ln -s /root/tools/theHarvester/wordlists ${WORDLISTS}/theharvester && \
   ln -s /usr/share/dirb/wordlists ${WORDLISTS}/dirb
 
+# ------------------------------
+# Other utilities
+# ------------------------------
+
+# Set timezone
+RUN ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
+  dpkg-reconfigure --frontend noninteractive tzdata
+
 # Command line updates
-RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
-  -t ${ZSH_THEME} \
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
   chsh -s $(which zsh)
 
 # Cleanup

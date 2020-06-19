@@ -67,7 +67,7 @@ docker run -it mcnamee/pentest-toolkit
 | [recon-ng](https://github.com/lanmaster53/recon-ng) | _Web-based open source reconnaissance framework._ <br> `recon-ng` |
 | [subfinder](https://github.com/projectdiscovery/subfinder) | _Subdomain discovery tool to find valid subdomains for websites by using passive online sources._ <br> `subfinder -d kali.org -v` |
 | [sublist3r](https://github.com/aboul3la/Sublist3r) | _Enumerates subdomains using many search engines such as Google, Yahoo, Bing, Baidu and more._ <br> `cd $TOOLS/sublist3r` <br>`python3 sublist3r.py -d kali.org` |
-| [theharvester](https://tools.kali.org/information-gathering/theharvester) | _Gather emails, subdomains, hosts, employee names, open ports and banners from different public sources like search engines, PGP key servers and SHODAN computer database._ <br> `cd $TOOLS/theharvester/` <br> <code>theharvester -d kali.org -b "bing, certspotter,dnsdumpster,dogpile,duckduckgo,google,hunter,linkedin,linkedin_links,twitter,yahoo"</code> |
+| [theharvester](https://tools.kali.org/information-gathering/theharvester) | _Gather emails, subdomains, hosts, employee names, open ports and banners from different public sources like search engines, PGP key servers and SHODAN computer database._ <br> `cd $TOOLS/theharvester/` <br> <code>theharvester -d kali.org -b "bing, certspotter, dnsdumpster, dogpile, duckduckgo, google, hunter, linkedin, linkedin_links, twitter, yahoo"</code> |
 | [virtual-host-discovery](https://github.com/jobertabma/virtual-host-discovery) | _HTTP scanner that'll enumerate virtual hosts on a given IP address._ <br> `cd $TOOLS/virtual-host-discovery` <br>`ruby scan.rb --ip=157.245.155.29 --host=resound.ly` |
 
 ### Information Gathering - Web Application
