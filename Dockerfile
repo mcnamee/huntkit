@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     git \
     iputils-ping \
+    jq \
     make \
     nano \
     net-tools \
@@ -45,24 +46,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    # dirb
     dirb \
-    # dnsenum
-    cpanminus \
-    # hydra
     hydra \
-     # joomscan
-    libwww-perl \
-    # nikto
     nikto \
-    # nmap
     nmap \
-    # proxy chains
-    tor \
-    proxychains \
-    # sqlmap
     sqlmap \
-    # wpcscan
+    # wpscan
     libcurl4-openssl-dev \
     libgmp-dev \
     libxml2 \
@@ -110,21 +99,6 @@ RUN git clone --depth 1 https://github.com/maurosoria/dirsearch.git ${TOOLS}/dir
   chmod +x dirsearch.py && \
   ln -sf ${TOOLS}/dirsearch/dirsearch.py /usr/local/bin/dirsearch
 
-# dnsenum
-RUN git clone --depth 1 https://github.com/fwaeytens/dnsenum.git ${TOOLS}/dnsenum && \
-  cd ${TOOLS}/dnsenum && \
-  cpanm String::Random && \
-  cpanm Net::DNS && \
-  cpanm Net::IP && \
-  cpanm Net::Netmask && \
-  cpanm XML::Writer && \
-  cpanm Net::Whois::IP && \
-  cpanm HTML::Parser && \
-  cpanm WWW::Mechanize && \
-  cpanm XML::Writer && \
-  chmod +x dnsenum.pl && \
-  ln -s ${TOOLS}/dnsenum/dnsenum.pl /usr/bin/dnsenum
-
 # exploitdb (searchsploit)
 RUN git clone https://github.com/offensive-security/exploitdb.git ${TOOLS}/exploitdb && \
   cd ${TOOLS}/exploitdb && \
@@ -171,12 +145,6 @@ RUN git clone --depth 1 https://github.com/laramies/theHarvester ${TOOLS}/thehar
   python3 -m pip install -r requirements/base.txt && \
   chmod +x theHarvester.py && \
   ln -sf ${TOOLS}/theharvester/theHarvester.py /usr/local/bin/theharvester
-
-# virtual-host-discovery
-RUN git clone --depth 1 https://github.com/jobertabma/virtual-host-discovery.git ${TOOLS}/virtual-host-discovery && \
-  cd ${TOOLS}/virtual-host-discovery && \
-  chmod +x scan.rb && \
-  ln -sf ${TOOLS}/virtual-host-discovery/scan.rb /usr/local/bin/virtual-host-discovery
 
 # wafw00f
 RUN git clone --depth 1 https://github.com/enablesecurity/wafw00f.git ${TOOLS}/wafw00f && \

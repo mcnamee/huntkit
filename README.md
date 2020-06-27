@@ -2,11 +2,11 @@
   <h1>Pen Test Toolkit</h1>
   <p></p>
   <sup>
-    <a href="https://github.com/mcnamee/pentest-toolkit/releases">
-      <img src="https://d25lcipzij17d.cloudfront.net/badge.png?id=gh&type=3d&v=0.2.0">
+    <a href="https://hub.docker.com/r/mcnamee/pentest-toolkit">
+      <img src="https://img.shields.io/docker/v/mcnamee/pentest-toolkit?style=flat-square" alt="version" />
     </a>
     <a href="https://github.com/mcnamee/pentest-toolkit/actions">
-      <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fmcnamee%2Fpentest-toolkit%2Fbadge%3Fref%3D0.2.0&style=flat" />
+      <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fmcnamee%2Fpentest-toolkit%2Fbadge&label=build&logo=none" />
     </a>
     <a href="/LICENSE">
       <img src="https://img.shields.io/github/license/mcnamee/pentest-toolkit?style=flat-square" alt="license" />
@@ -60,15 +60,13 @@ docker run -it mcnamee/pentest-toolkit
 | --- | --- |
 | [amass](https://github.com/OWASP/Amass) | _Network mapping of attack surfaces and external asset discovery using open source information gathering and active reconnaissance techniques._ <br>`amass enum -v -src -ip -brute -min-for-recursive 2 -d kali.org` |
 | [cloudflair](https://github.com/christophetd/CloudFlair) | _CloudFlair is a tool to find origin servers of websites protected by CloudFlare who are publicly exposed and don't restrict network access to the CloudFlare IP ranges as they should._ <br> `export CENSYS_API_ID=... && export CENSYS_API_SECRET=...` <br> `cloudflair resound.ly` |
-| [dnsenum](https://github.com/fwaeytens/dnsenum) | _Enumerate DNS information of a domain and to discover non-contiguous ip blocks._ <br> `dnsenum kali.org -enum -f $WORDLISTS/seclists/Discovery/DNS/subdomains-top1million-5000.txt` |
 | [fierce](https://github.com/mschwager/fierce) | _A DNS reconnaissance tool for locating non-contiguous IP space._ <br> `fierce --domain kali.org` |
 | [gobuster](https://github.com/OJ/gobuster) | _Gobuster is a tool used to brute-force: URIs (directories and files), DNS subdomains, Virtual Hosts._ <br> - `gobuster dns -d kali.org -w $WORDLISTS/seclists/Discovery/DNS/fierce-hostlist.txt` <br>- `gobuster dir -u https://www.kali.org  -w $WORDLISTS/dirb/common.txt` <br>- `gobuster vhost -u kali.org  -w $WORDLISTS/seclists/Discovery/DNS/fierce-hostlist.txt` |
 | [nmap](https://nmap.org/) | _A utility for network discovery and security auditing_. <br> `nmap -sV 192.168.0.1` |
 | [recon-ng](https://github.com/lanmaster53/recon-ng) | _Web-based open source reconnaissance framework._ <br> `recon-ng` |
 | [subfinder](https://github.com/projectdiscovery/subfinder) | _Subdomain discovery tool to find valid subdomains for websites by using passive online sources._ <br> `subfinder -d kali.org -v` |
-| [sublist3r](https://github.com/aboul3la/Sublist3r) | _Enumerates subdomains using many search engines such as Google, Yahoo, Bing, Baidu and more._ <br> `cd $TOOLS/sublist3r` <br>`python3 sublist3r.py -d kali.org` |
-| [theharvester](https://tools.kali.org/information-gathering/theharvester) | _Gather emails, subdomains, hosts, employee names, open ports and banners from different public sources like search engines, PGP key servers and SHODAN computer database._ <br> `cd $TOOLS/theharvester/` <br> <code>theharvester -d kali.org -b "bing, certspotter, dnsdumpster, dogpile, duckduckgo, google, hunter, linkedin, linkedin_links, twitter, yahoo"</code> |
-| [virtual-host-discovery](https://github.com/jobertabma/virtual-host-discovery) | _HTTP scanner that'll enumerate virtual hosts on a given IP address._ <br> `cd $TOOLS/virtual-host-discovery` <br>`ruby scan.rb --ip=157.245.155.29 --host=resound.ly` |
+| [sublist3r](https://github.com/aboul3la/Sublist3r) | _Enumerates subdomains using many search engines such as Google, Yahoo, Bing, Baidu and more._ <br> `( cd $TOOLS/sublist3r && python3 sublist3r.py -d kali.org )` |
+| [theharvester](https://tools.kali.org/information-gathering/theharvester) | _Gather emails, subdomains, hosts, employee names, open ports and banners from different public sources like search engines, PGP key servers and SHODAN computer database._ <br> <code>( cd $TOOLS/theharvester/ && theharvester -d kali.org -b "bing, certspotter, dnsdumpster, dogpile, duckduckgo, google, hunter, linkedin, linkedin_links, twitter, yahoo" )</code> |
 
 ### Web Application Specific
 
@@ -108,4 +106,3 @@ docker run -it mcnamee/pentest-toolkit
 ## Coming soon...
 
 - [] Stay anonymous
-- [] Social-Engineer Toolkit
