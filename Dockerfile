@@ -210,6 +210,9 @@ RUN ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
   chsh -s $(which zsh)
 
+# Easier to access list of nmap scripts
+RUN ln -s /usr/share/nmap/scripts/ $HOME/nmap-scripts
+
 # Cleanup
 RUN apt-get clean && \
   rm -rf /var/lib/apt/lists/*
