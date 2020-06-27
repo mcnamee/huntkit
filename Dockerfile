@@ -46,11 +46,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    brutespray \
     dirb \
     hydra \
     nikto \
     nmap \
     sqlmap \
+    # masscan
+    libpcap-dev \
     # wpscan
     libcurl4-openssl-dev \
     libgmp-dev \
@@ -99,6 +102,10 @@ RUN git clone --depth 1 https://github.com/maurosoria/dirsearch.git ${TOOLS}/dir
   chmod +x dirsearch.py && \
   ln -sf ${TOOLS}/dirsearch/dirsearch.py /usr/local/bin/dirsearch
 
+# dnmasscan
+RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git ${TOOLS}/dnmasscan && \
+  ln -sf ${TOOLS}/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
+
 # exploitdb (searchsploit)
 RUN git clone https://github.com/offensive-security/exploitdb.git ${TOOLS}/exploitdb && \
   cd ${TOOLS}/exploitdb && \
@@ -115,6 +122,12 @@ RUN git clone --depth 1 https://github.com/OJ/gobuster.git ${TOOLS}/gobuster && 
 # metasploit
 RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
   chmod 755 msfinstall && ./msfinstall
+
+# masscan
+RUN git clone --depth 1 https://github.com/robertdavidgraham/masscan.git ${TOOLS}/masscan && \
+  cd ${TOOLS}/masscan && \
+  make -j && \
+  ln -sf ${TOOLS}/masscan/bin/masscan /usr/local/bin/masscan
 
 # recon-ng
 RUN git clone --depth 1 https://github.com/lanmaster53/recon-ng.git ${TOOLS}/recon-ng && \
@@ -182,7 +195,7 @@ RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git ${TOOLS}/xsstrike
 RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git ${WORDLISTS}/seclists
 
 # Symlink other wordlists
-RUN ln -s /root/tools/theHarvester/wordlists ${WORDLISTS}/theharvester && \
+RUN ln -s /root/tools/theharvester/wordlists ${WORDLISTS}/theharvester && \
   ln -s /usr/share/dirb/wordlists ${WORDLISTS}/dirb
 
 # ------------------------------
