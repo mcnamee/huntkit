@@ -42,7 +42,7 @@ docker run -it mcnamee/pentest-toolkit
 docker run -itv ~/Projects:/root/projects mcnamee/pentest-toolkit
 ```
 
-[![asciicast](https://asciinema.org/a/343938.svg)](https://asciinema.org/a/343938)
+[![asciicast](https://asciinema.org/a/343944.svg)](https://asciinema.org/a/343944)
 
 ### Build
 
