@@ -48,8 +48,7 @@ docker run -it mcnamee/pentest-toolkit
 # 1. Clone the repo
 # 2. Build the image
 docker build . -t mcnamee/pentest-toolkit
-# 3. Run
-docker run -it mcnamee/pentest-toolkit
+# 3. Run (using the above scripts)
 ```
 
 ## Tools

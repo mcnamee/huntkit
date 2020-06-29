@@ -213,8 +213,17 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/inst
 # Easier to access list of nmap scripts
 RUN ln -s /usr/share/nmap/scripts/ $HOME/nmap-scripts
 
+# Copy the startup script across
+COPY ./startup.sh /startup.sh
+
+# ------------------------------
+# Finished
+# ------------------------------
+
 # Cleanup
 RUN apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+# Start up commands
+ENTRYPOINT ["bash", "/startup.sh"]
 CMD ["/bin/zsh"]
