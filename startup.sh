@@ -11,7 +11,7 @@ echo -e '   | |_) / _ \ `_ \| |/ _ \/ __| __|   | |/ _ \ / _ \| | |/ / | __| '
 echo -e '   |  __/  __/ | | | |  __/\__ \ |_    | | (_) | (_) | |   <| | |_  '
 echo -e '   |_|   \___|_| |_|_|\___||___/\__|   |_|\___/ \___/|_|_|\_\_|\__| '
 echo -e '////////////////////////////////////////////////////////////////////////';
-echo -e '               Built and maintained by Matt Mcnamee'
+echo -e '               Built and maintained by https://mcn.am'
 echo -e '            https://github.com/mcnamee/pentest-toolkit'
 echo -e "${bold}"
 echo -e '     Recon  —  Exploitation  —  Privilege Escalation  —  Persistence'

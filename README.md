@@ -33,56 +33,52 @@ I got sick of waiting for VitualBox to boot, Kali to boot, then dealing with the
 
 ## Instructions
 
+### Run from DockerHub
+
 ```bash
-# ••• Run from Docker Hub •••
 docker run -it mcnamee/pentest-toolkit
 
-# --- OR ---
+# - OR - build and mount a folder (for persistence)
+docker run -itv ~/Projects:/root/projects mcnamee/pentest-toolkit
+```
 
-# ••• Run from Docker Hub and mount a folder (to access a folder from within) •••
- docker run -itv ~/Projects:/root/projects mcnamee/pentest-toolkit
+### Build
 
-# --- OR ---
-
-# ••• Build from the repo •••
+```bash
 # 1. Clone the repo
+git clone https://github.com/mcnamee/pentest-toolkit.git && cd pentest-toolkit
+
 # 2. Build the image
 docker build . -t mcnamee/pentest-toolkit
-# 3. Run (using the above scripts)
 ```
 
 ## Tools
 
-### Information Gathering
+### Recon
 
 | Tool | Description & Example |
 | --- | --- |
 | [amass](https://github.com/OWASP/Amass) | _Network mapping of attack surfaces and external asset discovery using open source information gathering and active reconnaissance techniques._ <br>`amass enum -v -src -ip -brute -min-for-recursive 2 -d kali.org` |
 | [brutespray](https://github.com/x90skysn3k/brutespray) | _Service scanner by bruteforcing._ <br>`brutespray --file nmap.gnmap` |
 | [cloudflair](https://github.com/christophetd/CloudFlair) | _CloudFlair is a tool to find origin servers of websites protected by CloudFlare who are publicly exposed and don't restrict network access to the CloudFlare IP ranges as they should._ <br> `export CENSYS_API_ID=... && export CENSYS_API_SECRET=...` <br> `cloudflair resound.ly` |
+| [dirb](https://tools.kali.org/web-applications/dirb) | _Looks for existing (and/or hidden) Web Objects, by launching a dictionary based attack against a web server and analyzing the response._ <br> `dirb https://kali.org $WORDLISTS/seclists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt` |
+| [dirsearch](https://github.com/maurosoria/dirsearch) | _Brute forcees directories and files in websites to find things you might be interested in._ <br> <code>dirsearch -u kali.org -w $WORDLISTS/seclists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt -e php</code> |
 | [dnmasscan](https://github.com/rastating/dnmasscan) | _dnmasscan is a bash script to automate resolving a file of domain names and subsequentlly scanning them using masscan._ <br> `dnmasscan listofdomains.txt dns.log -p80,443 - oG masscan.log` |
 | [fierce](https://github.com/mschwager/fierce) | _A DNS reconnaissance tool for locating non-contiguous IP space._ <br> `fierce --domain kali.org` |
 | [gobuster](https://github.com/OJ/gobuster) | _Gobuster is a tool used to brute-force: URIs (directories and files), DNS subdomains, Virtual Hosts._ <br> - `gobuster dns -d kali.org -w $WORDLISTS/seclists/Discovery/DNS/fierce-hostlist.txt` <br>- `gobuster dir -u https://www.kali.org  -w $WORDLISTS/dirb/common.txt` <br>- `gobuster vhost -u kali.org  -w $WORDLISTS/seclists/Discovery/DNS/fierce-hostlist.txt` |
 | [masscan](https://github.com/robertdavidgraham/masscan) | _An Internet-scale port scanner._ <br> `masscan -p1-65535 -iL listofips.txt --max-rate 1800 -oG masscan.log` |
+| [nikto](https://tools.kali.org/information-gathering/nikto) | _Web server scanner which performs comprehensive tests against web servers for multiple items (dangerous files, outdated dependencies...)._ <br> `nikto -host=https://kali.org` |
 | [nmap](https://nmap.org/) | _A utility for network discovery and security auditing_. <br> `nmap -sV 192.168.0.1` |
 | [recon-ng](https://github.com/lanmaster53/recon-ng) | _Web-based open source reconnaissance framework._ <br> `recon-ng` |
 | [subfinder](https://github.com/projectdiscovery/subfinder) | _Subdomain discovery tool to find valid subdomains for websites by using passive online sources._ <br> `subfinder -d kali.org -v` |
 | [sublist3r](https://github.com/aboul3la/Sublist3r) | _Enumerates subdomains using many search engines such as Google, Yahoo, Bing, Baidu and more._ <br> `( cd $TOOLS/sublist3r && python3 sublist3r.py -d kali.org )` |
 | [theharvester](https://tools.kali.org/information-gathering/theharvester) | _Gather emails, subdomains, hosts, employee names, open ports and banners from different public sources like search engines, PGP key servers and SHODAN computer database._ <br> <code>( cd $TOOLS/theharvester/ && theharvester -d kali.org -b "bing, certspotter, dnsdumpster, dogpile, duckduckgo, google, hunter, linkedin, linkedin_links, twitter, yahoo" )</code> |
-
-### Web Application Specific
-
-| Tool | Description & Example |
-| --- | --- |
-| [dirb](https://tools.kali.org/web-applications/dirb) | _Looks for existing (and/or hidden) Web Objects, by launching a dictionary based attack against a web server and analyzing the response._ <br> `dirb https://kali.org $WORDLISTS/seclists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt` |
-| [dirsearch](https://github.com/maurosoria/dirsearch) | _Brute forcees directories and files in websites to find things you might be interested in._ <br> <code>dirsearch -u kali.org -w $WORDLISTS/seclists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt -e php</code> |
-| [nikto](https://tools.kali.org/information-gathering/nikto) | _Web server scanner which performs comprehensive tests against web servers for multiple items (dangerous files, outdated dependencies...)._ <br> `nikto -host=https://kali.org` |
 | [wafw00f](https://github.com/enablesecurity/wafw00f) | _Web Application Firewall Fingerprinting Tool._ <br> `wafw00f resound.ly` |
 | [whatweb](https://github.com/urbanadventurer/WhatWeb) | _Scans websites and highlights the CMS used, JavaScript libraries, web servers, version numbers, email addresses, account IDs, web framework modules, SQL errors, and more._ <br> `whatweb kali.org` |
 | [wpscan](https://github.com/wpscanteam/wpscan) | _WordPress Security Scanner._ <br> `wpscan --url kali.org` |
 | [xsstrike](https://github.com/s0md3v/XSStrike) | _Advanced XSS Detection Suite._ <br> `xsstrike --help` |
 
-### Exploitation Tools
+### Exploitation
 
 | Tool | Description & Example |
 | --- | --- |
@@ -104,7 +100,3 @@ docker build . -t mcnamee/pentest-toolkit
 ## Wordlists
 
 - [SecLists](https://github.com/danielmiessler/SecLists)
-
-## Coming soon...
-
-- [] Stay anonymous
