@@ -49,6 +49,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     brutespray \
+    dirb \
     hydra \
     nikto \
     nmap \
@@ -199,7 +200,8 @@ RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git ${TOOLS}/xsstrike
 RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git ${WORDLISTS}/seclists
 
 # Symlink other wordlists
-RUN ln -s /root/tools/theharvester/wordlists ${WORDLISTS}/theharvester
+RUN ln -s /root/tools/theharvester/wordlists ${WORDLISTS}/theharvester && \
+  ln -s /usr/share/dirb/wordlists ${WORDLISTS}/dirb
 
 # ------------------------------
 # Other utilities
