@@ -5,10 +5,11 @@ LABEL maintainer="Matt Mcnamee"
 # Environment Variables
 ENV HOME=/root
 ENV TOOLS="${HOME}/tools"
+ENV ADDONS="${HOME}/addons"
 ENV WORDLISTS="${HOME}/wordlists"
 ENV GO111MODULE=on
 ENV GOROOT=/usr/local/go
-ENV GOPATH=/root/go
+ENV GOPATH=/go
 ENV PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
 
 # Create working dirs
@@ -37,6 +38,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python \
     python3 \
     python3-pip \
+    ssh \
     tmux \
     tzdata \
     wget \
@@ -83,6 +85,13 @@ RUN python3 -m pip install --upgrade setuptools wheel
 # amass
 RUN go get -v github.com/OWASP/Amass/v3/...
 
+# cloudfail
+RUN git clone --depth 1 https://github.com/m0rtem/CloudFail.git ${TOOLS}/cloudfail && \
+  cd ${TOOLS}/cloudfail && \
+  python3 -m pip install -r requirements.txt && \
+  chmod +x cloudfail.py && \
+  ln -sf ${TOOLS}/cloudfail/cloudfail.py /usr/local/bin/cloudfail
+
 # cloudflair
 RUN git clone --depth 1 https://github.com/christophetd/CloudFlair.git ${TOOLS}/cloudflair && \
   cd ${TOOLS}/cloudflair && \
@@ -120,14 +129,21 @@ RUN git clone --depth 1 https://github.com/OJ/gobuster.git ${TOOLS}/gobuster && 
   go get && go install
 
 # metasploit
-RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
-  chmod 755 msfinstall && ./msfinstall
+RUN mkdir ${TOOLS}/metasploit && \
+  cd ${TOOLS}/metasploit && \
+  curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
+  chmod 755 msfinstall && \
+  ./msfinstall
 
 # masscan
 RUN git clone --depth 1 https://github.com/robertdavidgraham/masscan.git ${TOOLS}/masscan && \
   cd ${TOOLS}/masscan && \
   make -j && \
   ln -sf ${TOOLS}/masscan/bin/masscan /usr/local/bin/masscan
+
+# nuclei
+RUN go get -u -v github.com/projectdiscovery/nuclei/cmd/nuclei && \
+  git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git ${ADDONS}/nuclei
 
 # recon-ng
 RUN git clone --depth 1 https://github.com/lanmaster53/recon-ng.git ${TOOLS}/recon-ng && \
@@ -149,6 +165,7 @@ RUN go get -v github.com/projectdiscovery/subfinder/cmd/subfinder
 RUN git clone --depth 1 https://github.com/aboul3la/Sublist3r.git ${TOOLS}/sublist3r && \
   cd ${TOOLS}/sublist3r && \
   python3 -m pip install -r requirements.txt && \
+  chmod +x sublist3r.py && \
   ln -s ${TOOLS}/sublist3r/sublist3r.py /usr/local/bin/sublist3r
 
 # theharvester
@@ -211,7 +228,7 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/inst
   chsh -s $(which zsh)
 
 # Easier to access list of nmap scripts
-RUN ln -s /usr/share/nmap/scripts/ $HOME/nmap-scripts
+RUN ln -s /usr/share/nmap/scripts/ ${ADDONS}/nmap
 
 # Copy the startup script across
 COPY ./startup.sh /startup.sh
