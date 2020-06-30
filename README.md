@@ -38,8 +38,9 @@ I got sick of waiting for VitualBox to boot, Kali to boot, then dealing with the
 ```bash
 docker run -it mcnamee/pentest-toolkit
 
-# - OR - run and mount a local folder inside the contain (for persistence)
+# - OR - run and mount a local folder inside the container (for persistence)
 docker run -itv ~/Projects:/root/projects mcnamee/pentest-toolkit
+#                 ↳ Local dir   ↳ Container dir
 ```
 
 [![asciicast](https://asciinema.org/a/343944.svg)](https://asciinema.org/a/343944)
@@ -64,10 +65,7 @@ docker build . -t mcnamee/pentest-toolkit
 | [brutespray](https://github.com/x90skysn3k/brutespray) | _Service scanner by bruteforcing._ <br>`brutespray --file nmap.gnmap` |
 | [cloudfail](https://github.com/m0rtem/CloudFail) | _CloudFail is a tool to find origin servers of websites protected by CloudFlare._ <br> `( cd $TOOLS/cloudfail && cloudfail --target resound.ly )` |
 | [cloudflair](https://github.com/christophetd/CloudFlair) | _CloudFlair is a tool to find origin servers of websites protected by CloudFlare who are publicly exposed and don't restrict network access to the CloudFlare IP ranges as they should._ <br> `export CENSYS_API_ID=... && export CENSYS_API_SECRET=...` <br> `cloudflair resound.ly` |
-| [dirb](https://tools.kali.org/web-applications/dirb) | _Looks for existing (and/or hidden) Web Objects, by launching a dictionary based attack against a web server and analyzing the response._ <br> `dirb https://kali.org $WORDLISTS/seclists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt` |
-| [dirsearch](https://github.com/maurosoria/dirsearch) | _Brute forcees directories and files in websites to find things you might be interested in._ <br> <code>dirsearch -u kali.org -w $WORDLISTS/seclists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt -e php</code> |
 | [dnmasscan](https://github.com/rastating/dnmasscan) | _dnmasscan is a bash script to automate resolving a file of domain names and subsequentlly scanning them using masscan._ <br> `dnmasscan listofdomains.txt dns.log -p80,443 - oG masscan.log` |
-| [fierce](https://github.com/mschwager/fierce) | _A DNS reconnaissance tool for locating non-contiguous IP space._ <br> `fierce --domain kali.org` |
 | [gobuster](https://github.com/OJ/gobuster) | _Gobuster is a tool used to brute-force: URIs (directories and files), DNS subdomains, Virtual Hosts._ <br> - `gobuster dns -d kali.org -w $WORDLISTS/seclists/Discovery/DNS/fierce-hostlist.txt` <br>- `gobuster dir -u https://www.kali.org  -w $WORDLISTS/dirb/common.txt` <br>- `gobuster vhost -u kali.org  -w $WORDLISTS/seclists/Discovery/DNS/fierce-hostlist.txt` |
 | [masscan](https://github.com/robertdavidgraham/masscan) | _An Internet-scale port scanner._ <br> `masscan -p1-65535 -iL listofips.txt --max-rate 1800 -oG masscan.log` |
 | [nikto](https://tools.kali.org/information-gathering/nikto) | _Web server scanner which performs comprehensive tests against web servers for multiple items (dangerous files, outdated dependencies...)._ <br> `nikto -host=https://kali.org` |

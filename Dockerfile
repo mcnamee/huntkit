@@ -49,7 +49,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     brutespray \
-    dirb \
     hydra \
     nikto \
     nmap \
@@ -105,12 +104,6 @@ RUN git clone --depth 1 https://github.com/commixproject/commix.git ${TOOLS}/com
   chmod +x commix.py && \
   ln -sf ${TOOLS}/commix/commix.py /usr/local/bin/commix
 
-# dirsearch
-RUN git clone --depth 1 https://github.com/maurosoria/dirsearch.git ${TOOLS}/dirsearch && \
-  cd ${TOOLS}/dirsearch && \
-  chmod +x dirsearch.py && \
-  ln -sf ${TOOLS}/dirsearch/dirsearch.py /usr/local/bin/dirsearch
-
 # dnmasscan
 RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git ${TOOLS}/dnmasscan && \
   ln -sf ${TOOLS}/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
@@ -119,9 +112,6 @@ RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git ${TOOLS}/dnma
 RUN git clone https://github.com/offensive-security/exploitdb.git ${TOOLS}/exploitdb && \
   cd ${TOOLS}/exploitdb && \
   ln -s ${TOOLS}/exploitdb/searchsploit /usr/bin/searchsploit
-
-# fierce
-RUN python3 -m pip install fierce
 
 # gobuster
 RUN git clone --depth 1 https://github.com/OJ/gobuster.git ${TOOLS}/gobuster && \
@@ -182,9 +172,6 @@ RUN git clone --depth 1 https://github.com/enablesecurity/wafw00f.git ${TOOLS}/w
   chmod +x setup.py && \
   python3 setup.py install
 
-# wfuzz
-# RUN python3 -m pip install wfuzz
-
 # whatweb
 RUN git clone --depth 1 https://github.com/urbanadventurer/WhatWeb.git ${TOOLS}/whatweb && \
   cd ${TOOLS}/whatweb && \
@@ -212,8 +199,7 @@ RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git ${TOOLS}/xsstrike
 RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git ${WORDLISTS}/seclists
 
 # Symlink other wordlists
-RUN ln -s /root/tools/theharvester/wordlists ${WORDLISTS}/theharvester && \
-  ln -s /usr/share/dirb/wordlists ${WORDLISTS}/dirb
+RUN ln -s /root/tools/theharvester/wordlists ${WORDLISTS}/theharvester
 
 # ------------------------------
 # Other utilities
