@@ -96,9 +96,10 @@ docker build . -t mcnamee/pentest-toolkit
 
 | Tool | Description |
 | --- | --- |
+| [Oh My Zsh](https://ohmyz.sh/) | _Zsh is a framework for managing your zsh configuration, bundled with thousands of helpful functions, helpers, plugins, themes._ |
 | [tmux](https://github.com/tmux/tmux/wiki) | tmux is a terminal multiplexer. It lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal. |
-| [Oh My Zsh](https://ohmyz.sh/) | Zsh is a framework for managing your zsh configuration, bundled with thousands of helpful functions, helpers, plugins, themes. |
-| [zsh](https://www.zsh.org/) | Zsh is an extended Bourne shell with many improvements, including some features of Bash, ksh, and tcsh. |
+| [unfurl](https://github.com/tomnomnom/unfurl) | _Pull out bits of URLs provided on stdin._ <br> `cat urls.txt | unfurl --unique domains` |
+| [zsh](https://www.zsh.org/) | _Zsh is an extended Bourne shell with many improvements, including some features of Bash, ksh, and tcsh._ |
 
 ## Wordlists
 

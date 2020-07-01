@@ -167,6 +167,9 @@ RUN git clone --depth 1 https://github.com/laramies/theHarvester ${TOOLS}/thehar
   chmod +x theHarvester.py && \
   ln -sf ${TOOLS}/theharvester/theHarvester.py /usr/local/bin/theharvester
 
+# unfurl
+RUN go get -u github.com/tomnomnom/unfurl
+
 # wafw00f
 RUN git clone --depth 1 https://github.com/enablesecurity/wafw00f.git ${TOOLS}/wafw00f && \
   cd ${TOOLS}/wafw00f && \
