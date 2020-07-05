@@ -31,6 +31,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     iputils-ping \
     jq \
+    libgmp-dev \
+    libpcap-dev \
     make \
     nano \
     net-tools \
@@ -54,11 +56,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     nikto \
     nmap \
     sqlmap \
-    # masscan
-    libpcap-dev \
+    # johntheripper
+    libssl-dev \
+    yasm \
+    pkg-config \
+    libbz2-dev \
+    # OpenVPN
+    openvpn \
+    easy-rsa \
     # wpscan
     libcurl4-openssl-dev \
-    libgmp-dev \
     libxml2 \
     libxml2-dev \
     libxslt1-dev \
@@ -118,6 +125,12 @@ RUN git clone https://github.com/offensive-security/exploitdb.git ${TOOLS}/explo
 RUN git clone --depth 1 https://github.com/OJ/gobuster.git ${TOOLS}/gobuster && \
   cd ${TOOLS}/gobuster && \
   go get && go install
+
+# john the ripper
+RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper ${TOOLS}/john && \
+  cd ${TOOLS}/john/src && \
+  ./configure && make -s clean && make -sj4 && \
+  ln -sf ${TOOLS}/masscan/bin/john /usr/local/bin/john
 
 # metasploit
 RUN mkdir ${TOOLS}/metasploit && \
