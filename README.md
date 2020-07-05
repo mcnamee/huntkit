@@ -38,9 +38,11 @@ I got sick of waiting for VitualBox to boot, Kali to boot, then dealing with the
 ```bash
 docker run -it mcnamee/pentest-toolkit
 
-# - OR - run and mount a local folder inside the container (for persistence)
-docker run -itv ~/Projects:/root/projects mcnamee/pentest-toolkit
-#                 ↳ Local dir   ↳ Container dir
+# - OR - to map a local drive (line 2) + allow OpenVPN (line 3)
+docker run -it \
+  -v ~/Projects:/root/projects \
+  --cap-add=NET_ADMIN --device=/dev/net/tun \
+  mcnamee/pentest-toolkit
 ```
 
 [![asciicast](https://asciinema.org/a/343944.svg)](https://asciinema.org/a/343944)
@@ -97,8 +99,10 @@ docker build . -t mcnamee/pentest-toolkit
 
 | Tool | Description |
 | --- | --- |
+| FTP | _Connect to an FTP server._ <br> `ftp ftp.google.com` |
 | [Oh My Zsh](https://ohmyz.sh/) | _Zsh is a framework for managing your zsh configuration, bundled with thousands of helpful functions, helpers, plugins, themes._ |
-| [tmux](https://github.com/tmux/tmux/wiki) | tmux is a terminal multiplexer. It lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal. |
+| [OpenVPN](https://openvpn.net/) | _Connect to a VPN._ <br> Add `--cap-add=NET_ADMIN --device=/dev/net/tun` to the `docker run` to use OpenVPN |
+| [tmux](https://github.com/tmux/tmux/wiki) | _tmux is a terminal multiplexer. It lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal._ <br>`CNTR+b c` Create window <br>`CNTR+b n` Switch to next window |
 | [unfurl](https://github.com/tomnomnom/unfurl) | _Pull out bits of URLs provided on stdin._ <br> `cat urls.txt | unfurl --unique domains` |
 | [zsh](https://www.zsh.org/) | _Zsh is an extended Bourne shell with many improvements, including some features of Bash, ksh, and tcsh._ |
 
