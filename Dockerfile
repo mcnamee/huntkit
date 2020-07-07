@@ -122,6 +122,9 @@ RUN git clone https://github.com/offensive-security/exploitdb.git ${TOOLS}/explo
   cd ${TOOLS}/exploitdb && \
   ln -s ${TOOLS}/exploitdb/searchsploit /usr/bin/searchsploit
 
+# fuff
+RUN go get github.com/ffuf/ffuf
+
 # gobuster
 RUN git clone --depth 1 https://github.com/OJ/gobuster.git ${TOOLS}/gobuster && \
   cd ${TOOLS}/gobuster && \
@@ -132,6 +135,14 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper ${TOOLS}/j
   cd ${TOOLS}/john/src && \
   ./configure && make -s clean && make -sj4 && \
   ln -sf ${TOOLS}/masscan/bin/john /usr/local/bin/john
+
+# link finder
+RUN git clone --depth 1 https://github.com/GerbenJavado/LinkFinder.git ${TOOLS}/linkfinder && \
+  cd ${TOOLS}/linkfinder && \
+  python3 -m pip install -r requirements.txt && \
+  python3 setup.py install && \
+  chmod +x linkfinder.py && \
+  ln -sf ${TOOLS}/linkfinder/linkfinder.py /usr/local/bin/linkfinder
 
 # metasploit
 RUN mkdir ${TOOLS}/metasploit && \
@@ -165,6 +176,8 @@ RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit ${
 
 # subfinder
 RUN go get -v github.com/projectdiscovery/subfinder/cmd/subfinder
+
+RUN go get github.com/haccer/subjack
 
 # sublist3r
 RUN git clone --depth 1 https://github.com/aboul3la/Sublist3r.git ${TOOLS}/sublist3r && \
