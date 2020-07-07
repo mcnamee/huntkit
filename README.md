@@ -77,6 +77,7 @@ docker build . -t mcnamee/pentest-toolkit
 | [nmap](https://nmap.org/) | _A utility for network discovery and security auditing_. <br> `nmap -sV 192.168.0.1` |
 | [nuclei](https://github.com/projectdiscovery/nuclei) | _Nuclei is a fast tool for configurable targeted scanning based on templates offering massive extensibility and ease of use._. <br> `nuclei -l urls.txt -t $ADDONS/nuclei/ADDONS/nuclei/technologies/ -o ~/projects/results.txt` |
 | [recon-ng](https://github.com/lanmaster53/recon-ng) | _Web-based open source reconnaissance framework._ <br> `recon-ng` |
+| [sherlock](https://github.com/sherlock-project/sherlock) | _Hunt down social media accounts by username across social networks._ <br> `sherlock user1 user2 user3` |
 | [subfinder](https://github.com/projectdiscovery/subfinder) | _Subdomain discovery tool to find valid subdomains for websites by using passive online sources._ <br> `subfinder -d kali.org -v` |
 | [subjack](https://github.com/haccer/subjack) | _A Subdomain Takeover tool._ <br> `SJFP=$(find "${GOPATH}/pkg" -name fingerprints.json)` <br> `subjack -w subdomains.txt -t 100 -timeout 30 -o results.txt -a -c $SJFP` |
 | [sublist3r](https://github.com/aboul3la/Sublist3r) | _Enumerates subdomains using many search engines such as Google, Yahoo, Bing, Baidu and more._ <br> `( cd $TOOLS/sublist3r && python3 sublist3r.py -d kali.org )` |

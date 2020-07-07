@@ -45,6 +45,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tzdata \
     wget \
     whois \
+    zip \
+    unzip \
     zsh \
     && rm -rf /var/lib/apt/lists/*
 
@@ -168,6 +170,13 @@ RUN git clone --depth 1 https://github.com/lanmaster53/recon-ng.git ${TOOLS}/rec
   chmod +x recon-ng && \
   ln -sf ${TOOLS}/recon-ng/recon-ng /usr/local/bin/recon-ng
 
+# sherlock
+RUN git clone --depth 1 https://github.com/sherlock-project/sherlock ${TOOLS}/sherlock && \
+  cd ${TOOLS}/sherlock && \
+  python3 -m pip install -r requirements.txt && \
+  chmod +x sherlock/sherlock.py && \
+  ln -s ${TOOLS}/sherlock/sherlock/sherlock.py /usr/local/bin/sherlock
+
 # social engineer toolkit
 RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit ${TOOLS}/setoolkit && \
   cd ${TOOLS}/setoolkit && \
@@ -177,6 +186,7 @@ RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit ${
 # subfinder
 RUN go get -v github.com/projectdiscovery/subfinder/cmd/subfinder
 
+# subjack
 RUN go get github.com/haccer/subjack
 
 # sublist3r
