@@ -277,6 +277,9 @@ RUN ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 # Copy the startup script across
 COPY ./startup.sh /startup.sh
 
+# Create a tools.md from README.md
+COPY ./README.md /root/README.md
+
 # ------------------------------
 # Finished
 # ------------------------------
