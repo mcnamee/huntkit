@@ -257,7 +257,9 @@ RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike &
 RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists
 
 # rockyou
-RUN curl -L https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt -o rockyou.txt
+RUN curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b8d1eab059b4d7a567bf0a/wordlists/rockyou.txt.gz \
+  -o $WORDLISTS/rockyou.txt.gz && \
+  gunzip $WORDLISTS/rockyou.txt.gz
 
 # Symlink other wordlists
 RUN ln -sf /etc/theHarvester/wordlists $WORDLISTS/theharvester && \
