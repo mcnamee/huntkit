@@ -35,6 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpcap-dev \
     make \
     nano \
+    netcat \
     net-tools \
     perl \
     python \
@@ -255,9 +256,14 @@ RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike &
 # seclists
 RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists
 
+# rockyou
+RUN curl -L https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt -o rockyou.txt
+
 # Symlink other wordlists
 RUN ln -sf /etc/theHarvester/wordlists $WORDLISTS/theharvester && \
-  ln -sf /usr/share/dirb/wordlists $WORDLISTS/dirb
+  ln -sf /usr/share/dirb/wordlists $WORDLISTS/dirb && \
+  ln -sf /usr/share/metasploit-framework/data/wordlists $WORDLISTS/metasploit && \
+  ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlists ) $WORDLISTS/amass
 
 # ------------------------------
 # Other utilities
