@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     net-tools \
     perl \
     python \
+    python-pip \
     python3 \
     python3-pip \
     ssh \
@@ -48,10 +49,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     whois \
     zip \
     unzip \
-    zsh \
-    && rm -rf /var/lib/apt/lists/*
+    zsh
 
-# Install dependencies
+# Install tools & dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     brutespray \
     dirb \
@@ -79,6 +79,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-powerline \
     powerline
 
+RUN rm -rf /var/lib/apt/lists/*
+
 # Install go
 RUN cd /opt && \
     wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz && \
@@ -87,6 +89,7 @@ RUN cd /opt && \
     mv go /usr/local
 
 # Install Python common dependencies
+RUN pip install --upgrade setuptools wheel
 RUN python3 -m pip install --upgrade setuptools wheel
 
 # ------------------------------
@@ -125,6 +128,9 @@ RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmass
   chmod a+x dnmasscan && \
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
+# dnsprobe
+RUN go get -u -v github.com/projectdiscovery/dnsprobe
+
 # exploitdb (searchsploit)
 RUN git clone https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
   cd $TOOLS/exploitdb && \
@@ -137,6 +143,9 @@ RUN go get github.com/ffuf/ffuf
 RUN git clone --depth 1 https://github.com/OJ/gobuster.git $TOOLS/gobuster && \
   cd $TOOLS/gobuster && \
   go get && go install
+
+# httprobe
+RUN go get -u github.com/tomnomnom/httprobe
 
 # interlace
 RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
@@ -160,18 +169,21 @@ RUN git clone --depth 1 https://github.com/GerbenJavado/LinkFinder.git $TOOLS/li
   chmod a+x linkfinder.py && \
   ln -sf $TOOLS/linkfinder/linkfinder.py /usr/local/bin/linkfinder
 
+# masscan
+RUN git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/masscan && \
+  cd $TOOLS/masscan && \
+  make -j && \
+  ln -sf $TOOLS/masscan/bin/masscan /usr/local/bin/masscan
+
+# meg
+RUN go get -u github.com/tomnomnom/meg
+
 # metasploit
 RUN mkdir $TOOLS/metasploit && \
   cd $TOOLS/metasploit && \
   curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
   chmod 755 msfinstall && \
   ./msfinstall
-
-# masscan
-RUN git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/masscan && \
-  cd $TOOLS/masscan && \
-  make -j && \
-  ln -sf $TOOLS/masscan/bin/masscan /usr/local/bin/masscan
 
 # nuclei
 RUN go get -u -v github.com/projectdiscovery/nuclei/cmd/nuclei && \
@@ -183,6 +195,9 @@ RUN git clone --depth 1 https://github.com/lanmaster53/recon-ng.git $TOOLS/recon
   python3 -m pip install -r REQUIREMENTS && \
   chmod a+x recon-ng && \
   ln -sf $TOOLS/recon-ng/recon-ng /usr/local/bin/recon-ng
+
+# pwncat
+RUN python3 -m pip install pwncat
 
 # sherlock
 RUN git clone --depth 1 https://github.com/sherlock-project/sherlock $TOOLS/sherlock && \
