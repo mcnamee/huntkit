@@ -300,6 +300,9 @@ RUN ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 # Copy the startup script across
 COPY ./startup.sh /startup.sh
 
+# Common commands (aliases)
+RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> .zshrc
+
 # Create a tools.md from README.md
 COPY ./README.md /root/README.md
 
