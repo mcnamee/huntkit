@@ -277,10 +277,13 @@ RUN curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b
   gunzip $WORDLISTS/rockyou.txt.gz
 
 # Symlink other wordlists
-RUN ln -sf /etc/theHarvester/wordlists $WORDLISTS/theharvester && \
+RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlists ) $WORDLISTS/amass && \
+  ln -sf /usr/share/brutespray/wordlist $WORDLISTS/brutespray && \
   ln -sf /usr/share/dirb/wordlists $WORDLISTS/dirb && \
+  ln -sf /usr/share/setoolkit/src/fasttrack/wordlist.txt $WORDLISTS/fasttrack.txt && \
   ln -sf /usr/share/metasploit-framework/data/wordlists $WORDLISTS/metasploit && \
-  ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlists ) $WORDLISTS/amass
+  ln -sf /usr/share/nmap/nselib/data/passwords.lst $WORDLISTS/nmap.lst && \
+  ln -sf /etc/theHarvester/wordlists $WORDLISTS/theharvester
 
 # ------------------------------
 # Other utilities
