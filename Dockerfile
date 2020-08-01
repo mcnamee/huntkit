@@ -144,8 +144,8 @@ RUN git clone --depth 1 https://github.com/OJ/gobuster.git $TOOLS/gobuster && \
   cd $TOOLS/gobuster && \
   go get && go install
 
-# httprobe
-RUN go get -u github.com/tomnomnom/httprobe
+# httpx
+RUN go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
 
 # interlace
 RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
