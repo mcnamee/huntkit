@@ -5,8 +5,8 @@ LABEL maintainer="Matt Mcnamee"
 # Environment Variables
 ENV HOME=/root
 ENV TOOLS="/opt"
-ENV ADDONS="${HOME}/addons"
-ENV WORDLISTS="${HOME}/wordlists"
+ENV ADDONS="/usr/share/addons"
+ENV WORDLISTS="/usr/share/wordlists"
 ENV GO111MODULE=on
 ENV GOROOT=/usr/local/go
 ENV GOPATH=/go
@@ -14,7 +14,7 @@ ENV PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
 
 # Create working dirs
 WORKDIR /root
-RUN mkdir $WORDLISTS
+RUN mkdir $WORDLISTS && mkdir $ADDONS
 
 # ------------------------------
 # Common Dependencies
@@ -132,7 +132,7 @@ RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmass
 RUN go get -u -v github.com/projectdiscovery/dnsprobe
 
 # exploitdb (searchsploit)
-RUN git clone https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
+RUN git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
   cd $TOOLS/exploitdb && \
   ln -sf $TOOLS/exploitdb/searchsploit /usr/bin/searchsploit
 
@@ -245,6 +245,9 @@ RUN git clone --depth 1 https://github.com/enablesecurity/wafw00f.git $TOOLS/waf
   chmod a+x setup.py && \
   python3 setup.py install
 
+# wfuzz
+# RUN pip install wfuzz
+
 # whatweb
 RUN git clone --depth 1 https://github.com/urbanadventurer/WhatWeb.git $TOOLS/whatweb && \
   cd $TOOLS/whatweb && \
@@ -300,14 +303,11 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/inst
 # Easier to access list of nmap scripts
 RUN ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 
-# Copy the startup script across
-COPY ./startup.sh /startup.sh
-
 # Common commands (aliases)
 RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> .zshrc
 
-# Create a tools.md from README.md
-COPY ./README.md /root/README.md
+# Copy the startup script across
+COPY ./startup.sh /startup.sh
 
 # ------------------------------
 # Finished
