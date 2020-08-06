@@ -1,4 +1,4 @@
-FROM kalilinux/kali
+FROM ubuntu
 
 LABEL maintainer="Matt Mcnamee"
 
@@ -11,6 +11,7 @@ ENV GO111MODULE=on
 ENV GOROOT=/usr/local/go
 ENV GOPATH=/go
 ENV PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Create working dirs
 WORKDIR /root
@@ -21,7 +22,8 @@ RUN mkdir $WORDLISTS && mkdir $ADDONS
 # ------------------------------
 
 # Install Essentials
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
     apt-utils \
     awscli \
     build-essential \
@@ -38,8 +40,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     netcat \
     net-tools \
     perl \
+    php \
     python \
-    python-pip \
     python3 \
     python3-pip \
     ssh \
@@ -52,7 +54,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zsh
 
 # Install tools & dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
     brutespray \
     dirb \
     ftp \
@@ -65,6 +67,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     yasm \
     pkg-config \
     libbz2-dev \
+    # Metasploit
+    gnupg2 \
     # OpenVPN
     openvpn \
     easy-rsa \
@@ -88,8 +92,13 @@ RUN cd /opt && \
     rm -rf /opt/go1.14.4.linux-amd64.tar.gz && \
     mv go /usr/local
 
-# Install Python common dependencies
-RUN pip install --upgrade setuptools wheel
+# Install Pip (for Python2)
+RUN curl -O https://raw.githubusercontent.com/pypa/get-pip/master/get-pip.py &&  \
+    python get-pip.py  && \
+    echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.bashrc && \
+    rm get-pip.py
+
+# Install Python3 common dependencies
 RUN python3 -m pip install --upgrade setuptools wheel
 
 # ------------------------------
@@ -210,7 +219,7 @@ RUN git clone --depth 1 https://github.com/sherlock-project/sherlock $TOOLS/sher
 RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $TOOLS/setoolkit && \
   cd $TOOLS/setoolkit && \
   python3 -m pip install -r requirements.txt || : && \
-  python setup.py || :
+  python3 setup.py || :
 
 # subfinder
 RUN go get -v github.com/projectdiscovery/subfinder/cmd/subfinder
@@ -284,7 +293,7 @@ RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlist
   ln -sf /usr/share/brutespray/wordlist $WORDLISTS/brutespray && \
   ln -sf /usr/share/dirb/wordlists $WORDLISTS/dirb && \
   ln -sf /usr/share/setoolkit/src/fasttrack/wordlist.txt $WORDLISTS/fasttrack.txt && \
-  ln -sf /usr/share/metasploit-framework/data/wordlists $WORDLISTS/metasploit && \
+  ln -sf /opt/metasploit-framework/embedded/framework/data/wordlists $WORDLISTS/metasploit && \
   ln -sf /usr/share/nmap/nselib/data/passwords.lst $WORDLISTS/nmap.lst && \
   ln -sf /etc/theHarvester/wordlists $WORDLISTS/theharvester
 
@@ -304,7 +313,8 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/inst
 RUN ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 
 # Common commands (aliases)
-RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> .zshrc
+RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> .zshrc && \
+  echo "alias john='${TOOLS}/john/run/john'" >> .zshrc
 
 # Copy the startup script across
 COPY ./startup.sh /startup.sh

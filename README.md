@@ -41,7 +41,7 @@ docker run -it mcnamee/pentest-toolkit
 # - OR - to map a local drive (line 2) + allow OpenVPN (line 3)
 docker run -it \
   -v ~/Projects:/root/projects \
-  --cap-add=NET_ADMIN --device=/dev/net/tun \
+  --cap-add=ALL --net=host --device=/dev/net/tun \
   mcnamee/pentest-toolkit
 ```
 
