@@ -21,6 +21,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: mcnamee/pentest-toolkit
+        tags: latest
 
     - name: Sync Readme to Dockerhub
       uses: ms-jpq/sync-dockerhub-readme@v1

@@ -101,6 +101,10 @@ RUN curl -O https://raw.githubusercontent.com/pypa/get-pip/master/get-pip.py && 
 # Install Python3 common dependencies
 RUN python3 -m pip install --upgrade setuptools wheel
 
+# Install ZSH
+RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+  chsh -s $(which zsh)
+
 # ------------------------------
 # Tools
 # ------------------------------
@@ -131,6 +135,11 @@ RUN git clone --depth 1 https://github.com/commixproject/commix.git $TOOLS/commi
   chmod a+x commix.py && \
   ln -sf $TOOLS/commix/commix.py /usr/local/bin/commix
 
+# dalfox
+RUN git clone --depth 1 https://github.com/hahwul/dalfox.git $TOOLS/dalfox && \
+  cd $TOOLS/dalfox && \
+  go get && go install
+
 # dnmasscan
 RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan && \
   cd $TOOLS/dnmasscan && \
@@ -147,6 +156,10 @@ RUN git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOO
 
 # fuff
 RUN go get github.com/ffuf/ffuf
+
+# gau
+RUN go get -u -v github.com/lc/gau && \
+  echo "alias gau='/go/bin/gau'" >> .zshrc
 
 # gobuster
 RUN git clone --depth 1 https://github.com/OJ/gobuster.git $TOOLS/gobuster && \
@@ -167,7 +180,15 @@ RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlac
 # john the ripper
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper $TOOLS/john && \
   cd $TOOLS/john/src && \
+  echo "alias john='${TOOLS}/john/run/john'" >> .zshrc && \
   ./configure && make -s clean && make -sj4
+
+# jwt tool
+RUN git clone --depth 1 https://github.com/ticarpi/jwt_tool $TOOLS/jwttool && \
+  cd $TOOLS/jwttool && \
+  python3 -m pip install pycryptodomex && \
+  chmod a+x jwt_tool.py && \
+  ln -sf $TOOLS/jwttool/jwt_tool.py /usr/local/bin/jwttool
 
 # link finder
 RUN git clone --depth 1 https://github.com/GerbenJavado/LinkFinder.git $TOOLS/linkfinder && \
@@ -223,6 +244,9 @@ RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $T
 
 # subfinder
 RUN go get -v github.com/projectdiscovery/subfinder/cmd/subfinder
+
+# subjs
+RUN go get -u -v github.com/lc/subjs
 
 # subjack
 RUN go get github.com/haccer/subjack
@@ -305,16 +329,11 @@ RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlist
 RUN ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
   dpkg-reconfigure --frontend noninteractive tzdata
 
-# Command line updates
-RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-  chsh -s $(which zsh)
-
 # Easier to access list of nmap scripts
 RUN ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 
 # Common commands (aliases)
-RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> .zshrc && \
-  echo "alias john='${TOOLS}/john/run/john'" >> .zshrc
+RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> .zshrc
 
 # Copy the startup script across
 COPY ./startup.sh /startup.sh
