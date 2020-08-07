@@ -159,7 +159,7 @@ RUN go get github.com/ffuf/ffuf
 
 # gau
 RUN go get -u -v github.com/lc/gau && \
-  echo "alias gau='/go/bin/gau'" >> .zshrc
+  echo "alias gau='/go/bin/gau'" >> ~/.zshrc
 
 # gobuster
 RUN git clone --depth 1 https://github.com/OJ/gobuster.git $TOOLS/gobuster && \
@@ -180,7 +180,7 @@ RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlac
 # john the ripper
 RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper $TOOLS/john && \
   cd $TOOLS/john/src && \
-  echo "alias john='${TOOLS}/john/run/john'" >> .zshrc && \
+  echo "alias john='${TOOLS}/john/run/john'" >> ~/.zshrc && \
   ./configure && make -s clean && make -sj4
 
 # jwt tool
@@ -333,7 +333,7 @@ RUN ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
 RUN ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 
 # Common commands (aliases)
-RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> .zshrc
+RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
 
 # Copy the startup script across
 COPY ./startup.sh /startup.sh
