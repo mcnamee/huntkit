@@ -104,6 +104,7 @@ docker build . -t mcnamee/pentest-toolkit
 
 | Tool | Description & Example |
 | --- | --- |
+| [cupp](https://github.com/Mebus/cupp) | _Personal wordlist generator._ <br> `cupp -i` |
 | [john](https://github.com/magnumripper/JohnTheRipper) | _John the Ripper is a fast password cracker._ <br> `zip2john filename.zip > hash.txt`<br> `john hash.txt` |
 | [jwttool](https://github.com/ticarpi/jwt_tool) | _A toolkit for validating, forging and cracking JWTs (JSON Web Tokens)._ <br> `jwttool eyJ0eXAiOiJ.eyJsb2dpbi.aqNCvShlN -A` |
 | [metasploit](https://tools.kali.org/exploitation-tools/metasploit-framework) | _A penetration testing platform that enables you to find, exploit, and validate vulnerabilities.._ <br> `msfconsole` |

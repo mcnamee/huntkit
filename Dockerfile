@@ -136,6 +136,12 @@ RUN git clone --depth 1 https://github.com/commixproject/commix.git $TOOLS/commi
   chmod a+x commix.py && \
   ln -sf $TOOLS/commix/commix.py /usr/local/bin/commix
 
+# cupp
+RUN git clone --depth 1 https://github.com/Mebus/cupp.git $TOOLS/cupp && \
+  cd $TOOLS/cupp && \
+  chmod a+x cupp.py && \
+  ln -sf $TOOLS/cupp/cupp.py /usr/local/bin/cupp
+
 # dalfox
 RUN git clone --depth 1 https://github.com/hahwul/dalfox.git $TOOLS/dalfox && \
   cd $TOOLS/dalfox && \
