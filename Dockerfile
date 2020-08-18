@@ -41,10 +41,12 @@ RUN apt-get update \
     net-tools \
     perl \
     php \
+    proxychains \
     python \
     python3 \
     python3-pip \
     ssh \
+    tor \
     tmux \
     tzdata \
     wget \
@@ -338,6 +340,14 @@ RUN ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
 
 # Easier to access list of nmap scripts
 RUN ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
+
+# Proxychains config
+RUN echo "dynamic_chain \
+  proxy_dns \
+  tcp_read_time_out 15000 \
+  tcp_connect_time_out 8000 \
+  [ProxyList] \
+  socks5 127.0.0.1 9050" > /etc/proxychains.conf
 
 # Common commands (aliases)
 RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
