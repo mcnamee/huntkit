@@ -228,15 +228,24 @@ RUN mkdir $TOOLS/metasploit && \
 RUN go get -u -v github.com/projectdiscovery/nuclei/cmd/nuclei && \
   git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
+# pwncat
+RUN python3 -m pip install pwncat
+
+# pagodo
+RUN git clone --depth 1 https://github.com/opsdisk/pagodo.git $TOOLS/pagodo && \
+  cd $TOOLS/pagodo && \
+  python3 -m pip install -r requirements.txt && \
+  sed -i 's^#!/usr/bin/env python^#!/usr/bin/python3^g' pagodo.py && \
+  python3 ghdb_scraper.py -j -s && \
+  chmod a+x pagodo.py && \
+  ln -sf $TOOLS/pagodo/pagodo.py /usr/local/bin/pagodo
+
 # recon-ng
 RUN git clone --depth 1 https://github.com/lanmaster53/recon-ng.git $TOOLS/recon-ng && \
   cd $TOOLS/recon-ng && \
   python3 -m pip install -r REQUIREMENTS && \
   chmod a+x recon-ng && \
   ln -sf $TOOLS/recon-ng/recon-ng /usr/local/bin/recon-ng
-
-# pwncat
-RUN python3 -m pip install pwncat
 
 # sherlock
 RUN git clone --depth 1 https://github.com/sherlock-project/sherlock $TOOLS/sherlock && \
@@ -342,12 +351,12 @@ RUN ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
 RUN ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 
 # Proxychains config
-RUN echo "dynamic_chain \
-  proxy_dns \
-  tcp_read_time_out 15000 \
-  tcp_connect_time_out 8000 \
-  [ProxyList] \
-  socks5 127.0.0.1 9050" > /etc/proxychains.conf
+RUN echo "dynamic_chain" > /etc/proxychains.conf && \
+  echo "proxy_dns" >> /etc/proxychains.conf && \
+  echo "tcp_read_time_out 15000" >> /etc/proxychains.conf && \
+  echo "tcp_connect_time_out 8000" >> /etc/proxychains.conf && \
+  echo "[ProxyList]" >> /etc/proxychains.conf && \
+  echo "socks5 127.0.0.1 9050" >> /etc/proxychains.conf
 
 # Common commands (aliases)
 RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc

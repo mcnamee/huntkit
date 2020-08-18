@@ -87,6 +87,7 @@ docker build . -t mcnamee/pentest-toolkit
 | [nikto](https://tools.kali.org/information-gathering/nikto) | _Web server scanner which performs comprehensive tests against web servers for multiple items (dangerous files, outdated dependencies...)._ <br> `nikto -host=https://kali.org` |
 | [nmap](https://nmap.org/) | _A utility for network discovery and security auditing_. <br> `nmap -sV 192.168.0.1` |
 | [nuclei](https://github.com/projectdiscovery/nuclei) | _Nuclei is a fast tool for configurable targeted scanning based on templates offering massive extensibility and ease of use._. <br> `nuclei -l urls.txt -t $ADDONS/nuclei/ADDONS/nuclei/technologies/ -o ~/projects/results.txt` |
+| [pagodo](https://github.com/opsdisk/pagodo) | _Passive Google dork script to collect potentially vulnerable web pages and applications on the Internet._. <br> `pagodo -d $DOMAIN -g dorks/sensitive_directories.dorks -l 100 -s -e 35.0 -j 1.1` |
 | [recon-ng](https://github.com/lanmaster53/recon-ng) | _Web-based open source reconnaissance framework._ <br> `recon-ng` |
 | [sherlock](https://github.com/sherlock-project/sherlock) | _Hunt down social media accounts by username across social networks._ <br> `sherlock user1 user2 user3` |
 | [subfinder](https://github.com/projectdiscovery/subfinder) | _Subdomain discovery tool to find valid subdomains for websites by using passive online sources._ <br> `subfinder -d kali.org -v` |
@@ -122,9 +123,11 @@ docker build . -t mcnamee/pentest-toolkit
 | [Go](https://golang.org/) | The PHP programming language |
 | [Interlace](https://github.com/codingo/Interlace) | _Easily turn single threaded command line applications into a fast, multi-threaded application._ <br> `interlace -tL targets.txt -threads 5 -c "gobuster dns -d _target_ -w wordlist.txt --noprogress --quiet >> _target_.txt" -v` |
 | [Oh My Zsh](https://ohmyz.sh/) | _Zsh is a framework for managing your zsh configuration, bundled with thousands of helpful functions, helpers, plugins, themes._ |
-| [OpenVPN](https://openvpn.net/) | _Connect to a VPN._ <br> Add `--cap-add=NET_ADMIN --device=/dev/net/tun` to the `docker run` to use OpenVPN |
-| [PHP](https://www.php.net/) | The PHP scripting language |
-| [Python 2 & 3](https://www.python.org/) | The Python programming language |
+| [OpenVPN](https://openvpn.net/) | _Connect to a VPN._ <br> Add `--cap-add=NET_ADMIN --device=/dev/net/tun` to the `docker run` to use OpenVPN. |
+| [PHP](https://www.php.net/) | _The PHP scripting language._ |
+| [Proxychains](https://github.com/haad/proxychains) | _Redirects connections through SOCKS4a/5 or HTTP proxies._ |
+| [Python 2 & 3](https://www.python.org/) | _The Python programming language_ |
+| [Tor](https://www.torproject.org/) | _Browse Privately._ |
 | [tmux](https://github.com/tmux/tmux/wiki) | _tmux is a terminal multiplexer. It lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal._ <br>`CNTR+b c` Create window <br>`CNTR+b n` Switch to next window |
 | [unfurl](https://github.com/tomnomnom/unfurl) | _Pull out bits of URLs provided on stdin._ <br> `cat urls.txt | unfurl --unique domains` |
 | [zsh](https://www.zsh.org/) | _Zsh is an extended Bourne shell with many improvements, including some features of Bash, ksh, and tcsh._ |
