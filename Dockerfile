@@ -39,6 +39,7 @@ RUN apt-get update \
     nano \
     netcat \
     net-tools \
+    nodejs \
     perl \
     php \
     proxychains \
