@@ -122,11 +122,14 @@ docker build . -t mcnamee/pentest-toolkit
 | FTP | _Connect to an FTP server._ <br> `ftp ftp.google.com` |
 | [Go](https://golang.org/) | The PHP programming language |
 | [Interlace](https://github.com/codingo/Interlace) | _Easily turn single threaded command line applications into a fast, multi-threaded application._ <br> `interlace -tL targets.txt -threads 5 -c "gobuster dns -d _target_ -w wordlist.txt --noprogress --quiet >> _target_.txt" -v` |
+| [NodeJS](https://nodejs.org/) | _Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine._ |
 | [Oh My Zsh](https://ohmyz.sh/) | _Zsh is a framework for managing your zsh configuration, bundled with thousands of helpful functions, helpers, plugins, themes._ |
 | [OpenVPN](https://openvpn.net/) | _Connect to a VPN._ <br> Add `--cap-add=NET_ADMIN --device=/dev/net/tun` to the `docker run` to use OpenVPN. |
+| [Perl](https://www.perl.org/) | _Perl is a highly capable, feature-rich programming language with over 30 years of development._ |
 | [PHP](https://www.php.net/) | _The PHP scripting language._ |
 | [Proxychains](https://github.com/haad/proxychains) | _Redirects connections through SOCKS4a/5 or HTTP proxies._ |
 | [Python 2 & 3](https://www.python.org/) | _The Python programming language_ |
+| [Ruby](https://www.ruby-lang.org/) | _A dynamic, open source programming language with a focus on simplicity and productivity. It has an elegant syntax that is natural to read and easy to write._ |
 | [Tor](https://www.torproject.org/) | _Browse Privately._ |
 | [tmux](https://github.com/tmux/tmux/wiki) | _tmux is a terminal multiplexer. It lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal._ <br>`CNTR+b c` Create window <br>`CNTR+b n` Switch to next window |
 | [unfurl](https://github.com/tomnomnom/unfurl) | _Pull out bits of URLs provided on stdin._ <br> `cat urls.txt | unfurl --unique domains` |
