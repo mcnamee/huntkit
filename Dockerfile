@@ -23,83 +23,86 @@ RUN mkdir $WORDLISTS && mkdir $ADDONS
 
 # Install Essentials
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    apt-utils \
-    awscli \
-    build-essential \
-    curl \
-    dnsutils \
-    gcc \
-    git \
-    iputils-ping \
-    jq \
-    libgmp-dev \
-    libpcap-dev \
-    make \
-    nano \
-    netcat \
-    net-tools \
-    nodejs \
-    perl \
-    php \
-    proxychains \
-    python \
-    python3 \
-    python3-pip \
-    ssh \
-    tor \
-    tmux \
-    tzdata \
-    wget \
-    whois \
-    zip \
-    unzip \
-    zsh
+  && apt-get install -y --no-install-recommends \
+  apt-utils \
+  awscli \
+  build-essential \
+  curl \
+  dnsutils \
+  gcc \
+  git \
+  iputils-ping \
+  jq \
+  libgmp-dev \
+  libpcap-dev \
+  make \
+  nano \
+  netcat \
+  net-tools \
+  perl \
+  php \
+  proxychains \
+  python \
+  python3 \
+  python3-pip \
+  ssh \
+  tor \
+  tmux \
+  tzdata \
+  wget \
+  whois \
+  zip \
+  unzip \
+  zsh
 
 # Install tools & dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
-    brutespray \
-    dirb \
-    ftp \
-    hydra \
-    nikto \
-    nmap \
-    sqlmap \
-    # johntheripper
-    libssl-dev \
-    yasm \
-    pkg-config \
-    libbz2-dev \
-    # Metasploit
-    gnupg2 \
-    # OpenVPN
-    openvpn \
-    easy-rsa \
-    # wpscan
-    libcurl4-openssl-dev \
-    libxml2 \
-    libxml2-dev \
-    libxslt1-dev \
-    ruby-dev \
-    zlib1g-dev \
-    # zsh
-    fonts-powerline \
-    powerline
+  brutespray \
+  dirb \
+  ftp \
+  hydra \
+  nikto \
+  nmap \
+  sqlmap \
+  # johntheripper
+  libssl-dev \
+  yasm \
+  pkg-config \
+  libbz2-dev \
+  # Metasploit
+  gnupg2 \
+  # OpenVPN
+  openvpn \
+  easy-rsa \
+  # wpscan
+  libcurl4-openssl-dev \
+  libxml2 \
+  libxml2-dev \
+  libxslt1-dev \
+  ruby-dev \
+  zlib1g-dev \
+  # zsh
+  fonts-powerline \
+  powerline
 
 RUN rm -rf /var/lib/apt/lists/*
 
 # Install go
 RUN cd /opt && \
-    wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz && \
-    tar -xvf go1.14.4.linux-amd64.tar.gz && \
-    rm -rf /opt/go1.14.4.linux-amd64.tar.gz && \
-    mv go /usr/local
+  wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz && \
+  tar -xvf go1.14.4.linux-amd64.tar.gz && \
+  rm -rf /opt/go1.14.4.linux-amd64.tar.gz && \
+  mv go /usr/local
+
+# Install Node
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+  && apt install -y --no-install-recommends nodejs
 
 # Install Pip (for Python2)
 RUN curl -O https://raw.githubusercontent.com/pypa/get-pip/master/get-pip.py &&  \
-    python get-pip.py  && \
-    echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.bashrc && \
-    rm get-pip.py
+  python get-pip.py  && \
+  echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.bashrc && \
+  rm get-pip.py
 
 # Install Python3 common dependencies
 RUN pip install paramiko
