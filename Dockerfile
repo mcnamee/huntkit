@@ -365,6 +365,9 @@ RUN echo "dynamic_chain" > /etc/proxychains.conf && \
 # Common commands (aliases)
 RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
 
+# Kali reverse shells
+RUN git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/share/webshells
+
 # Copy the startup script across
 COPY ./startup.sh /startup.sh
 
