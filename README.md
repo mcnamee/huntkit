@@ -80,7 +80,7 @@ docker build . -t mcnamee/pentest-toolkit
 | [ffuf](https://github.com/ffuf/ffuf) | _A fast web fuzzer._ <br> - `ffuf -w /path/to/postdata.txt -X POST -d "username=admin\&password=FUZZ" -u https://target/login.php -fc 401` |
 | [gau](https://github.com/lc/gau) | _getallurls (gau) fetches known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl for any given domain._ <br> - `gau example.com` |
 | [gobuster](https://github.com/OJ/gobuster) | _Gobuster is a tool used to brute-force: URIs (directories and files), DNS subdomains, Virtual Hosts._ <br> - `gobuster dns -d kali.org -w $WORDLISTS/seclists/Discovery/DNS/fierce-hostlist.txt` <br>- `gobuster dir -u https://www.kali.org  -w $WORDLISTS/dirb/common.txt` <br>- `gobuster vhost -u kali.org  -w $WORDLISTS/seclists/Discovery/DNS/fierce-hostlist.txt` |
-| [httpx](https://github.com/projectdiscovery/httpx) | _Take a list of domains and probe for working http and https servers._ <br> <code></code>cat domains.txt | httpx</code> |
+| [httpx](https://github.com/projectdiscovery/httpx) | _Take a list of domains and probe for working http and https servers._ <br> <code>cat domains.txt | httpx</code> |
 | [linkfinder](https://github.com/GerbenJavado/LinkFinder) | _Discover endpoints and their parameters in JavaScript files._ <br> `linkfinder -i https://example.com -d -o cli` |
 | [masscan](https://github.com/robertdavidgraham/masscan) | _An Internet-scale port scanner._ <br> `masscan -p1-65535 -iL listofips.txt --max-rate 1800 -oG masscan.log` |
 | [meg](https://github.com/robertdavidgraham/masscan) | _A tool for fetching lots of URLs but still being 'nice' to servers._ <br> `meg paths.txt hosts.txt` |
@@ -105,13 +105,14 @@ docker build . -t mcnamee/pentest-toolkit
 
 | Tool | Description & Example |
 | --- | --- |
+| [crunch](https://tools.kali.org/password-attacks/crunch) | _Wordlist generator where you can specify a standard character set or a character set you specify._ <br> `crunch 6 6 0123456789abcdef -o 6chars.txt` |
 | [cupp](https://github.com/Mebus/cupp) | _Personal wordlist generator._ <br> `cupp -i` |
 | [john](https://github.com/magnumripper/JohnTheRipper) | _John the Ripper is a fast password cracker._ <br> `zip2john filename.zip > hash.txt`<br> `john hash.txt` |
 | [jwttool](https://github.com/ticarpi/jwt_tool) | _A toolkit for validating, forging and cracking JWTs (JSON Web Tokens)._ <br> `jwttool eyJ0eXAiOiJ.eyJsb2dpbi.aqNCvShlN -A` |
 | [metasploit](https://tools.kali.org/exploitation-tools/metasploit-framework) | _A penetration testing platform that enables you to find, exploit, and validate vulnerabilities.._ <br> `msfconsole` |
 | [hydra](https://tools.kali.org/password-attacks/hydra) | <code>hydra -f -l email@admin.com -P $WORDLISTS/seclists/Passwords/darkweb2017-top1000.txt website.com http-post-form "/login:user=^USER^&pass=^PASS^:Failed"</code> |
 | [netcat](http://netcat.sourceforge.net/) | _A networking utility which reads and writes data across network connections, using the TCP/IP protocol._ <br> `nc -nvlp 1234` |
-| [pwncat](https://pwncat.org/) | _a sophisticated bind and reverse shell handler with many features as well as a drop-in replacement or compatible complement to netcat._ <br> `pwncat -nvlp 1234` |
+| [pwncat](https://pwncat.org/) | _A sophisticated bind and reverse shell handler with many features as well as a drop-in replacement or compatible complement to netcat._ <br> `pwncat -nvlp 1234` |
 | [searchsploit](https://tools.kali.org/exploitation-tools/exploitdb) | _Searchable archive from The Exploit Database._ <br> `searchsploit oracle windows remote` |
 | [setoolkit](https://www.trustedsec.com/tools/the-social-engineer-toolkit-set/) | _Social Engineering Toolkit._ <br> `setoolkit` |
 

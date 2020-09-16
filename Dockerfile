@@ -53,11 +53,14 @@ RUN apt-get update \
   whois \
   zip \
   unzip \
-  zsh
+  zsh && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 # Install tools & dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
   brutespray \
+  crunch \
   dirb \
   ftp \
   hydra \
@@ -83,20 +86,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
   zlib1g-dev \
   # zsh
   fonts-powerline \
-  powerline
-
-RUN rm -rf /var/lib/apt/lists/*
+  powerline && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 # Install go
 RUN cd /opt && \
-  wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz && \
-  tar -xvf go1.14.4.linux-amd64.tar.gz && \
-  rm -rf /opt/go1.14.4.linux-amd64.tar.gz && \
+  wget https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz && \
+  tar -xvf go1.15.2.linux-amd64.tar.gz && \
+  rm -rf /opt/go1.15.2.linux-amd64.tar.gz && \
   mv go /usr/local
 
 # Install Node
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-  && apt install -y --no-install-recommends nodejs
+  && apt install -y --no-install-recommends nodejs && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
 
 # Install Pip (for Python2)
 RUN curl -O https://raw.githubusercontent.com/pypa/get-pip/master/get-pip.py &&  \
