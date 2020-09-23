@@ -1,15 +1,15 @@
 <div align="center">
-  <h1>Pen Test Toolkit</h1>
+  <h1>HuntKit</h1>
   <p></p>
   <sup>
-    <a href="https://hub.docker.com/r/mcnamee/pentest-toolkit">
-      <img src="https://img.shields.io/docker/v/mcnamee/pentest-toolkit?style=flat-square" alt="version" />
+    <a href="https://hub.docker.com/r/mcnamee/huntkit">
+      <img src="https://img.shields.io/docker/v/mcnamee/huntkit?style=flat-square" alt="version" />
     </a>
-    <a href="https://github.com/mcnamee/pentest-toolkit/actions">
-      <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fmcnamee%2Fpentest-toolkit%2Fbadge&label=build&logo=none" />
+    <a href="https://github.com/mcnamee/huntkit/actions">
+      <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fmcnamee%2Fhuntkit%2Fbadge&label=build&logo=none" />
     </a>
     <a href="/LICENSE">
-      <img src="https://img.shields.io/github/license/mcnamee/pentest-toolkit?style=flat-square" alt="license" />
+      <img src="https://img.shields.io/github/license/mcnamee/huntkit?style=flat-square" alt="license" />
     </a>
   </sup>
   <br />
@@ -25,7 +25,7 @@
 
 ## What is this?
 
-A collection of pen testing in a single Docker container. Simply run the image and start using the tools.
+A collection of pen testing/bug bounty hunting/red teaming tools in a single Docker container. Simply run the image and start using the tools.
 
 __Why?__
 
@@ -37,7 +37,7 @@ I got sick of waiting for VitualBox to boot, Kali to boot, then dealing with the
 
 ```bash
 # Simple
-docker run -it mcnamee/pentest-toolkit
+docker run -it mcnamee/huntkit
 
 # Advanced
 # Line 2: maps ~/Projects to the Docker /root/projects
@@ -47,7 +47,7 @@ docker run -it \
   -v ~/Projects:/root/projects \
   --cap-add=NET_ADMIN --device=/dev/net/tun \
   -p 4444:4444 \
-  mcnamee/pentest-toolkit
+  mcnamee/huntkit
 ```
 
 [![asciicast](https://asciinema.org/a/343944.svg)](https://asciinema.org/a/343944)
@@ -56,10 +56,10 @@ docker run -it \
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/mcnamee/pentest-toolkit.git && cd pentest-toolkit
+git clone https://github.com/mcnamee/huntkit.git && cd huntkit
 
 # 2. Build the image
-docker build . -t mcnamee/pentest-toolkit
+docker build . -t mcnamee/huntkit
 ```
 
 ## Tools
