@@ -26,7 +26,7 @@ A collection of pen testing/bug bounty hunting/red teaming tools in a single Doc
 
 __Why?__
 
-I got sick of waiting for VitualBox to boot, Kali to boot, then dealing with the slugish-ness of operating in a VM. I still use Kali for certain tasks. But for a quick nmap scan (for example), this image is a lot quicker.
+I got sick of waiting for VitualBox to start, Kali to boot, then dealing with the slugish-ness of operating in a VM. I still use Kali for certain tasks. But for a quick nmap scan (for example), this image is a lot quicker.
 
 ## Instructions
 
