@@ -5,9 +5,6 @@
     <a href="https://hub.docker.com/r/mcnamee/huntkit">
       <img src="https://img.shields.io/docker/v/mcnamee/huntkit?style=flat-square" alt="version" />
     </a>
-    <a href="https://github.com/mcnamee/huntkit/actions">
-      <img alt="Build Status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fmcnamee%2Fhuntkit%2Fbadge&label=build&logo=none" />
-    </a>
     <a href="/LICENSE">
       <img src="https://img.shields.io/github/license/mcnamee/huntkit?style=flat-square" alt="license" />
     </a>
