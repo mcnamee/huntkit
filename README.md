@@ -40,10 +40,12 @@ docker run -it mcnamee/huntkit
 # Line 2: maps ~/Projects to the Docker /root/projects
 # Line 3: Allows OpenVPN
 # Line 4: Opens and maps port 4444 (for listeners such as Metasploit)
+# Line 5: Sets the machine's hostname to huntkit
 docker run -it \
   -v ~/Projects:/root/projects \
   --cap-add=NET_ADMIN --device=/dev/net/tun \
   -p 4444:4444 \
+  -h huntkit
   mcnamee/huntkit
 ```
 

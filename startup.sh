@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 BOLD=$(tput bold)
 NORMAL=$(tput sgr0)
 RED='\033[0;31m'
@@ -17,9 +17,11 @@ echo -e '            https://github.com/mcnamee/huntkit'
 echo -e "${BOLD}"
 echo -e '  Recon  —  Exploitation  —  Privilege Escalation  —  Persistence'
 echo -e "${NORMAL}${RED}"
-echo -e "      ► Should you be running through a VPN or TOR Proxy? ◄"
 echo -e "                 Your IP is: ${MYIP}"
 echo -e "${NC}"
+
+# Start tor
+service tor start
 
 # Ensure the final executable receives the Unix signals
 exec "$@"

@@ -352,6 +352,16 @@ RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlist
 # Other utilities
 # ------------------------------
 
+# Kali reverse shells
+RUN git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/share/webshells
+
+# Copy the startup script across
+COPY ./startup.sh /startup.sh
+
+# ------------------------------
+# Config
+# ------------------------------
+
 # Set timezone
 RUN ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
   dpkg-reconfigure --frontend noninteractive tzdata
@@ -370,11 +380,8 @@ RUN echo "dynamic_chain" > /etc/proxychains.conf && \
 # Common commands (aliases)
 RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
 
-# Kali reverse shells
-RUN git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/share/webshells
-
-# Copy the startup script across
-COPY ./startup.sh /startup.sh
+# Change ZSH theme
+sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc
 
 # ------------------------------
 # Finished
