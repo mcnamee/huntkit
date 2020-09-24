@@ -380,8 +380,11 @@ RUN echo "dynamic_chain" > /etc/proxychains.conf && \
 # Common commands (aliases)
 RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
 
-# Change ZSH theme
-sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc
+# ZSH config
+RUN sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc && \
+  sed -i 's^# DISABLE_UPDATE_PROMPT="true"^DISABLE_UPDATE_PROMPT="true"^g' ~/.zshrc && \
+  sed -i 's^# DISABLE_AUTO_UPDATE="true"^DISABLE_AUTO_UPDATE="true"^g' ~/.zshrc && \
+  echo 'export EDITOR="nano"' >> ~/.zshrc
 
 # ------------------------------
 # Finished
