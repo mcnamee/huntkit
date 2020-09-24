@@ -21,7 +21,7 @@ echo -e "                 Your IP is: ${MYIP}"
 echo -e "${NC}"
 
 # Start tor
-service tor start
+service tor start > /dev/null 2>&1
 
 # Ensure the final executable receives the Unix signals
 exec "$@"
