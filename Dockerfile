@@ -353,7 +353,8 @@ RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlist
 # ------------------------------
 
 # Kali reverse shells
-RUN git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/share/webshells
+RUN git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/share/webshells && \
+  ln -s /usr/share/webshells $ADDONS/webshells
 
 # Copy the startup script across
 COPY ./startup.sh /startup.sh
@@ -389,10 +390,6 @@ RUN sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc && \
 # ------------------------------
 # Finished
 # ------------------------------
-
-# Cleanup
-RUN apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
 
 # Start up commands
 ENTRYPOINT ["bash", "/startup.sh"]
