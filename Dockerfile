@@ -270,7 +270,7 @@ RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $T
   python3 setup.py || :
 
 # subfinder
-RUN go get -v github.com/projectdiscovery/subfinder/cmd/subfinder
+RUN go get -u -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
 
 # subjs
 RUN go get -u -v github.com/lc/subjs
