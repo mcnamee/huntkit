@@ -104,6 +104,7 @@ docker build . -t mcnamee/huntkit
 
 | Tool | Description & Example |
 | --- | --- |
+| [breach-parse](https://github.com/hmaverickadams/breach-parse) | _A tool for parsing breached passwords._<br> `breach-parse @tesla.com tesla.txt "~/Downloads/BreachCompilation/data"` |
 | [crunch](https://tools.kali.org/password-attacks/crunch) | _Wordlist generator where you can specify a standard character set or a character set you specify._ <br> `crunch 6 6 0123456789abcdef -o 6chars.txt` |
 | [cupp](https://github.com/Mebus/cupp) | _Personal wordlist generator._ <br> `cupp -i` |
 | [john](https://github.com/magnumripper/JohnTheRipper) | _John the Ripper is a fast password cracker._ <br> `zip2john filename.zip > hash.txt`<br> `john hash.txt` |
@@ -130,6 +131,7 @@ docker build . -t mcnamee/huntkit
 | [Proxychains](https://github.com/haad/proxychains) | _Redirects connections through SOCKS4a/5 or HTTP proxies._ |
 | [Python 2 & 3](https://www.python.org/) | _The Python programming language_ |
 | [Ruby](https://www.ruby-lang.org/) | _A dynamic, open source programming language with a focus on simplicity and productivity. It has an elegant syntax that is natural to read and easy to write._ |
+| [smbclient](https://installlion.com/kali/kali/main/s/smbclient/install/index.html) | `smbclient \\192.168.0.45\Media` |
 | [Tor](https://www.torproject.org/) | _Browse Privately._ |
 | [tmux](https://github.com/tmux/tmux/wiki) | _tmux is a terminal multiplexer. It lets you switch easily between several programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal._ <br>`CNTR+b c` Create window <br>`CNTR+b n` Switch to next window |
 | [unfurl](https://github.com/tomnomnom/unfurl) | _Pull out bits of URLs provided on stdin._ <br> `cat urls.txt | unfurl --unique domains` |

@@ -133,6 +133,12 @@ RUN git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail
   chmod a+x cloudfail.py && \
   ln -sf $TOOLS/cloudfail/cloudfail.py /usr/local/bin/cloudfail
 
+# breach-parse
+RUN git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
+  cd $TOOLS/breach-parse && \
+  chmod a+x breach-parse.sh && \
+  ln -sf $TOOLS/breach-parse/breach-parse.sh /usr/local/bin/breach-parse
+
 # cloudflair
 RUN git clone --depth 1 https://github.com/christophetd/CloudFlair.git $TOOLS/cloudflair && \
   cd $TOOLS/cloudflair && \
