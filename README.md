@@ -45,7 +45,7 @@ docker run -it \
   -v ~/Projects:/root/projects \
   --cap-add=NET_ADMIN --device=/dev/net/tun \
   -p 4444:4444 \
-  -h huntkit
+  -h huntkit \
   mcnamee/huntkit
 ```
 
