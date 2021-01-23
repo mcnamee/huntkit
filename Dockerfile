@@ -173,7 +173,7 @@ RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmass
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
 # dnsprobe
-RUN go get -u -v github.com/projectdiscovery/dnsprobe
+RUN go get -u -v github.com/projectdiscovery/dnsx/cmd/dnsx
 
 # exploitdb (searchsploit)
 RUN git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
