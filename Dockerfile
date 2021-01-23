@@ -63,6 +63,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
   crunch \
   dirb \
   ftp \
+  hping3 \
   hydra \
   nikto \
   nmap \
