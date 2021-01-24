@@ -106,8 +106,8 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   rm -rf /var/lib/apt/lists/*
 
 # Install Pip (for Python2)
-RUN curl -O https://raw.githubusercontent.com/pypa/get-pip/master/get-pip.py &&  \
-  python get-pip.py  && \
+RUN curl -sSL https://bootstrap.pypa.io/3.4/get-pip.py -o get-pip.py && \
+  python get-pip.py && \
   echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.bashrc && \
   rm get-pip.py
 
