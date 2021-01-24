@@ -193,7 +193,7 @@ RUN git clone --depth 1 https://github.com/OJ/gobuster.git $TOOLS/gobuster && \
   go get && go install
 
 # httpx
-RUN go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
+RUN go get -v github.com/projectdiscovery/httpx/cmd/httpx
 
 # interlace
 RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
@@ -242,7 +242,7 @@ RUN mkdir $TOOLS/metasploit && \
   ./msfinstall
 
 # nuclei
-RUN go get -u -v github.com/projectdiscovery/nuclei/cmd/nuclei && \
+RUN go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei && \
   git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
 # pwncat
@@ -278,7 +278,7 @@ RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $T
   python3 setup.py || :
 
 # subfinder
-RUN go get -u -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+RUN go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
 
 # subjs
 RUN go get -u -v github.com/lc/subjs
