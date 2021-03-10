@@ -187,11 +187,6 @@ RUN go get github.com/ffuf/ffuf
 RUN go get -u -v github.com/lc/gau && \
   echo "alias gau='/go/bin/gau'" >> ~/.zshrc
 
-# gobuster
-RUN git clone --depth 1 https://github.com/OJ/gobuster.git $TOOLS/gobuster && \
-  cd $TOOLS/gobuster && \
-  go get && go install
-
 # httpx
 RUN go get -v github.com/projectdiscovery/httpx/cmd/httpx
 
