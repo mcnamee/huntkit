@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>HuntKit</h1>
+  <img src="docs/logo.jpg" alt="HuntKit" style="width:100%" />
   <p></p>
   <sup>
     <a href="https://hub.docker.com/r/mcnamee/huntkit">
@@ -22,11 +22,11 @@
 
 ## What is this?
 
-A collection of pen testing/bug bounty hunting/red teaming tools in a single Docker container. Simply run the image and start using the tools.
+HuntKit is a collection of penetration testing, bug bounty hunting, capture the flag, red teaming tools in a single Docker image. Simply run the image and start using the tools.
 
 __Why?__
 
-I got sick of waiting for VitualBox to start, Kali to boot, then dealing with the slugish-ness of operating in a VM. I still use Kali for certain tasks. But for a quick nmap scan (for example), this image is a lot quicker.
+I got sick of waiting for VitualBox to start, Kali to boot, then dealing with the slugish-ness of operating in a VM. I still use Kali for certain tasks. But for a quick nmap scan (for example), using this continatiner is *a lot* quicker.
 
 ## Instructions
 
@@ -111,7 +111,6 @@ docker build . -t mcnamee/huntkit
 | [metasploit](https://tools.kali.org/exploitation-tools/metasploit-framework) | _A penetration testing platform that enables you to find, exploit, and validate vulnerabilities.._ <br> `msfconsole` |
 | [hydra](https://tools.kali.org/password-attacks/hydra) | <code>hydra -f -l email@admin.com -P $WORDLISTS/seclists/Passwords/darkweb2017-top1000.txt website.com http-post-form "/login:user=^USER^&pass=^PASS^:Failed"</code> |
 | [netcat](http://netcat.sourceforge.net/) | _A networking utility which reads and writes data across network connections, using the TCP/IP protocol._ <br> `nc -nvlp 1234` |
-| [pwncat](https://pwncat.org/) | _A sophisticated bind and reverse shell handler with many features as well as a drop-in replacement or compatible complement to netcat._ <br> `pwncat -nvlp 1234` |
 | [searchsploit](https://tools.kali.org/exploitation-tools/exploitdb) | _Searchable archive from The Exploit Database._ <br> `searchsploit oracle windows remote` |
 | [setoolkit](https://www.trustedsec.com/tools/the-social-engineer-toolkit-set/) | _Social Engineering Toolkit._ <br> `setoolkit` |
 
@@ -142,7 +141,7 @@ docker build . -t mcnamee/huntkit
 
 - Amass
 - Dirb
-- Kali's rockyou.txt
+- Kali's `rockyou.txt`
 - Metasploit
 - The Harvester
 - [SecLists](https://github.com/danielmiessler/SecLists)

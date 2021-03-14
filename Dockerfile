@@ -240,9 +240,6 @@ RUN mkdir $TOOLS/metasploit && \
 RUN go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei && \
   git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
-# pwncat
-RUN python3 -m pip install pwncat
-
 # pagodo
 RUN git clone --depth 1 https://github.com/opsdisk/pagodo.git $TOOLS/pagodo && \
   cd $TOOLS/pagodo && \
