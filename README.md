@@ -26,17 +26,18 @@ HuntKit is a collection of penetration testing, bug bounty hunting, capture the 
 
 __Why?__
 
-I got sick of waiting for VitualBox to start, Kali to boot, then dealing with the slugish-ness of operating in a VM. I still use Kali for certain tasks. But for a quick nmap scan (for example), using this continatiner is *a lot* quicker.
+I got sick of waiting for VitualBox to start, Kali to boot, then dealing with the slugish-ness of operating in a VM. I still use Kali for certain tasks. But for a quick nmap scan (for example), using this container is *a lot* quicker.
 
 ## Instructions
 
 ### Run from DockerHub
 
 ```bash
-# Simple
 docker run -it mcnamee/huntkit
 
-# Advanced
+# - OR -
+
+# Advanced:
 # Line 2: maps ~/Projects to the Docker /root/projects
 # Line 3: Allows OpenVPN
 # Line 4: Opens and maps port 4444 (for listeners such as Metasploit)
@@ -49,7 +50,7 @@ docker run -it \
   mcnamee/huntkit
 ```
 
-[![asciicast](https://asciinema.org/a/343944.svg)](https://asciinema.org/a/343944)
+[![asciicast](https://asciinema.org/a/403549.svg)](https://asciinema.org/a/403549)
 
 ### Build
 
