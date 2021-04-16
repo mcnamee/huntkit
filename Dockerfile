@@ -386,7 +386,8 @@ RUN sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc && \
   sed -i 's^# DISABLE_UPDATE_PROMPT="true"^DISABLE_UPDATE_PROMPT="true"^g' ~/.zshrc && \
   sed -i 's^# DISABLE_AUTO_UPDATE="true"^DISABLE_AUTO_UPDATE="true"^g' ~/.zshrc && \
   sed -i 's^plugins=(git)^plugins=(tmux nmap)^g' ~/.zshrc && \
-  echo 'export EDITOR="nano"' >> ~/.zshrc
+  echo 'export EDITOR="nano"' >> ~/.zshrc && \
+  git config --global oh-my-zsh.hide-info 1
 
 # ------------------------------
 # Finished
