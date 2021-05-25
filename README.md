@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/hero.png" alt="HuntKit" style="width:100%" />
+  <img src="https://github.com/mcnamee/huntkit/raw/master/docs/hero.png" alt="HuntKit" style="width:100%" />
   <p></p>
   <sup>
     <a href="https://hub.docker.com/r/mcnamee/huntkit">
