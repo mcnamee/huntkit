@@ -10,7 +10,7 @@ ENV WORDLISTS="/usr/share/wordlists"
 ENV GO111MODULE=on
 ENV GOROOT=/usr/local/go
 ENV GOPATH=/go
-ENV PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
+ENV PATH=${HOME}/:${GOPATH}/bin:${GOROOT}/bin:${PATH}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Create working dirs
@@ -22,8 +22,8 @@ RUN mkdir $WORDLISTS && mkdir $ADDONS
 # ------------------------------
 
 # Install Essentials
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends --fix-missing \
   apt-utils \
   awscli \
   build-essential \
@@ -58,7 +58,8 @@ RUN apt-get update \
   rm -rf /var/lib/apt/lists/*
 
 # Install tools & dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends --fix-missing \
   brutespray \
   crunch \
   dirb \
@@ -108,7 +109,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
 # Install Pip (for Python2)
 RUN curl -sSL https://bootstrap.pypa.io/pip/3.4/get-pip.py -o get-pip.py && \
   python get-pip.py && \
-  echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.bashrc && \
+  echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.zshrc && \
   rm get-pip.py
 
 # Install Python3 common dependencies
