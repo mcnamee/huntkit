@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Environment Variables
-HOME=/root
-TOOLS="/opt"
-ADDONS="/usr/share/addons"
-WORDLISTS="/usr/share/wordlists"
-GO111MODULE=on
-GOROOT=/usr/local/go
-GOPATH=/go
-PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
-DEBIAN_FRONTEND=noninteractive
+export HOME=/root
+export TOOLS="/opt"
+export ADDONS="/usr/share/addons"
+export WORDLISTS="/usr/share/wordlists"
+export GO111MODULE=on
+export GOROOT=/usr/local/go
+export GOPATH=/go
+export PATH=${HOME}/:${GOPATH}/bin:${GOROOT}/bin:${PATH}
+export DEBIAN_FRONTEND=noninteractive
 
 # Create working dirs
 mkdir $WORDLISTS && mkdir $ADDONS
@@ -17,8 +17,8 @@ mkdir $WORDLISTS && mkdir $ADDONS
 # --- Common Dependencies ---
 
 # Install Essentials
-apt-get update \
-  && apt-get install -y --no-install-recommends \
+apt-get update && \
+  apt-get install -y --no-install-recommends --fix-missing \
   apt-utils \
   awscli \
   build-essential \
@@ -52,7 +52,8 @@ apt-get update \
   echo "Placeholder"
 
 # Install tools & dependencies
-apt-get update && apt-get install -y --no-install-recommends --fix-missing \
+apt-get update && \
+  apt-get install -y --no-install-recommends --fix-missing \
   brutespray \
   crunch \
   dirb \
@@ -100,7 +101,7 @@ curl -sL https://deb.nodesource.com/setup_14.x | bash - \
 # Install Pip (for Python2)
 curl -sSL https://bootstrap.pypa.io/pip/3.4/get-pip.py -o get-pip.py && \
   python get-pip.py && \
-  echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.bashrc && \
+  echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.zshrc && \
   rm get-pip.py
 
 # Install Python3 common dependencies
@@ -345,7 +346,6 @@ git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/sha
   ln -s /usr/share/webshells $ADDONS/webshells
 
 # Copy the startup script across
-COPY ./startup.sh /startup.sh
 
 # --- Config ---
 
@@ -376,3 +376,7 @@ sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc && \
   git config --global oh-my-zsh.hide-info 1
 
 # --- Finished ---
+
+# Start up commands
+echo "export PATH=${PATH}" >> ~/.zshrc
+chsh -s $(which zsh)

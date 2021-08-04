@@ -20,12 +20,13 @@ cat Dockerfile >> $FILENAME
 
 # Remove Docker keywords
 sed -i'.bak' -e 's/RUN //g' $FILENAME
-sed -i'.bak' -e 's/ENV //g' $FILENAME
+sed -i'.bak' -e 's/ENV /export /g' $FILENAME
 
 # Remove whole lines
 sed -i'.bak' -e '/^FROM/d' $FILENAME
 sed -i'.bak' -e '/^LABEL/d' $FILENAME
 sed -i'.bak' -e '/^WORKDIR/d' $FILENAME
+sed -i'.bak' -e '/^COPY/d' $FILENAME
 sed -i'.bak' -e '/^ENTRYPOINT/d' $FILENAME
 sed -i'.bak' -e '/^CMD/d' $FILENAME
 
@@ -45,9 +46,11 @@ sed -i'.bak' -e 's/apt-get clean && .*/echo "Placeholder"/g' $FILENAME
 # We don't want the script interupted to switch Shells
 sed -i'.bak' -e 's/chsh -s $(which zsh)/echo "Placeholder"/g' $FILENAME
 
-# Remove last 2 lines (could be improved)
-tac $FILENAME | sed '1,2d' | tac > "${FILENAME}.bak"
-cat "${FILENAME}.bak" > $FILENAME
+# Add PATH
+echo "echo \"export PATH=\${PATH}\" >> ~/.zshrc" >> $FILENAME
+
+# Change default shell right at the end
+echo "chsh -s \$(which zsh)" >> $FILENAME
 
 # Remove Backup file
 rm "${FILENAME}.bak"
