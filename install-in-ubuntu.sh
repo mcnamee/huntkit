@@ -1,28 +1,23 @@
-FROM ubuntu
-
-LABEL maintainer="Matt Mcnamee"
+#!/bin/bash
 
 # Environment Variables
-ENV HOME=/root
-ENV TOOLS="/opt"
-ENV ADDONS="/usr/share/addons"
-ENV WORDLISTS="/usr/share/wordlists"
-ENV GO111MODULE=on
-ENV GOROOT=/usr/local/go
-ENV GOPATH=/go
-ENV PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
-ENV DEBIAN_FRONTEND=noninteractive
+HOME=/root
+TOOLS="/opt"
+ADDONS="/usr/share/addons"
+WORDLISTS="/usr/share/wordlists"
+GO111MODULE=on
+GOROOT=/usr/local/go
+GOPATH=/go
+PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
+DEBIAN_FRONTEND=noninteractive
 
 # Create working dirs
-WORKDIR /root
-RUN mkdir $WORDLISTS && mkdir $ADDONS
+mkdir $WORDLISTS && mkdir $ADDONS
 
-# ------------------------------
 # --- Common Dependencies ---
-# ------------------------------
 
 # Install Essentials
-RUN apt-get update \
+apt-get update \
   && apt-get install -y --no-install-recommends \
   apt-utils \
   awscli \
@@ -54,11 +49,10 @@ RUN apt-get update \
   zip \
   unzip \
   zsh && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+  echo "Placeholder"
 
 # Install tools & dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
+apt-get update && apt-get install -y --no-install-recommends --fix-missing \
   brutespray \
   crunch \
   dirb \
@@ -89,45 +83,41 @@ RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
   # zsh
   fonts-powerline \
   powerline && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+  echo "Placeholder"
 
 # Install go
-RUN cd /opt && \
+cd /opt && \
   wget https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz && \
   tar -xvf go1.15.2.linux-amd64.tar.gz && \
   rm -rf /opt/go1.15.2.linux-amd64.tar.gz && \
   mv go /usr/local
 
 # Install Node
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   && apt install -y --no-install-recommends nodejs && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+  echo "Placeholder"
 
 # Install Pip (for Python2)
-RUN curl -sSL https://bootstrap.pypa.io/pip/3.4/get-pip.py -o get-pip.py && \
+curl -sSL https://bootstrap.pypa.io/pip/3.4/get-pip.py -o get-pip.py && \
   python get-pip.py && \
   echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.bashrc && \
   rm get-pip.py
 
 # Install Python3 common dependencies
-RUN pip install paramiko
-RUN python3 -m pip install --upgrade setuptools wheel paramiko
+pip install paramiko
+python3 -m pip install --upgrade setuptools wheel paramiko
 
 # Install ZSH
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
-  chsh -s $(which zsh)
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
+  echo "Placeholder"
 
-# ------------------------------
 # --- Tools ---
-# ------------------------------
 
 # amass
-RUN go get -v github.com/OWASP/Amass/v3/...
+go get -v github.com/OWASP/Amass/v3/...
 
 # cloudfail
-RUN git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail && \
+git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail && \
   cd $TOOLS/cloudfail && \
   python3 -m pip install -r requirements.txt && \
   sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' cloudfail.py && \
@@ -135,13 +125,13 @@ RUN git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail
   ln -sf $TOOLS/cloudfail/cloudfail.py /usr/local/bin/cloudfail
 
 # breach-parse
-RUN git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
+git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
   cd $TOOLS/breach-parse && \
   chmod a+x breach-parse.sh && \
   ln -sf $TOOLS/breach-parse/breach-parse.sh /usr/local/bin/breach-parse
 
 # cloudflair
-RUN git clone --depth 1 https://github.com/christophetd/CloudFlair.git $TOOLS/cloudflair && \
+git clone --depth 1 https://github.com/christophetd/CloudFlair.git $TOOLS/cloudflair && \
   cd $TOOLS/cloudflair && \
   python3 -m pip install -r requirements.txt && \
   sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' cloudflair.py && \
@@ -149,49 +139,49 @@ RUN git clone --depth 1 https://github.com/christophetd/CloudFlair.git $TOOLS/cl
   ln -sf $TOOLS/cloudflair/cloudflair.py /usr/local/bin/cloudflair
 
 # commix
-RUN git clone --depth 1 https://github.com/commixproject/commix.git $TOOLS/commix && \
+git clone --depth 1 https://github.com/commixproject/commix.git $TOOLS/commix && \
   cd $TOOLS/commix && \
   sed -i 's^#!/usr/bin/env python^#!/usr/bin/python2^g' commix.py && \
   chmod a+x commix.py && \
   ln -sf $TOOLS/commix/commix.py /usr/local/bin/commix
 
 # cupp
-RUN git clone --depth 1 https://github.com/Mebus/cupp.git $TOOLS/cupp && \
+git clone --depth 1 https://github.com/Mebus/cupp.git $TOOLS/cupp && \
   cd $TOOLS/cupp && \
   chmod a+x cupp.py && \
   ln -sf $TOOLS/cupp/cupp.py /usr/local/bin/cupp
 
 # dalfox
-RUN git clone --depth 1 https://github.com/hahwul/dalfox.git $TOOLS/dalfox && \
+git clone --depth 1 https://github.com/hahwul/dalfox.git $TOOLS/dalfox && \
   cd $TOOLS/dalfox && \
   go get && go install
 
 # dnmasscan
-RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan && \
+git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan && \
   cd $TOOLS/dnmasscan && \
   chmod a+x dnmasscan && \
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
 # dnsprobe
-RUN go get -v github.com/projectdiscovery/dnsx/cmd/dnsx
+go get -v github.com/projectdiscovery/dnsx/cmd/dnsx
 
 # exploitdb (searchsploit)
-RUN git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
+git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
   cd $TOOLS/exploitdb && \
   ln -sf $TOOLS/exploitdb/searchsploit /usr/bin/searchsploit
 
 # fuff
-RUN go get github.com/ffuf/ffuf
+go get github.com/ffuf/ffuf
 
 # gau
-RUN go get -u -v github.com/lc/gau && \
+go get -u -v github.com/lc/gau && \
   echo "alias gau='/go/bin/gau'" >> ~/.zshrc
 
 # httpx
-RUN go get -v github.com/projectdiscovery/httpx/cmd/httpx
+go get -v github.com/projectdiscovery/httpx/cmd/httpx
 
 # interlace
-RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
+git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
   cd $TOOLS/interlace && \
   python3 -m pip install -r requirements.txt && \
   python3 setup.py install && \
@@ -199,20 +189,20 @@ RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlac
   ln -sf $TOOLS/interlace/Interlace/interlace.py /usr/local/bin/interlace
 
 # john the ripper
-RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper $TOOLS/john && \
+git clone --depth 1 https://github.com/magnumripper/JohnTheRipper $TOOLS/john && \
   cd $TOOLS/john/src && \
   echo "alias john='${TOOLS}/john/run/john'" >> ~/.zshrc && \
   ./configure && make -s clean && make -sj4
 
 # jwt tool
-RUN git clone --depth 1 https://github.com/ticarpi/jwt_tool $TOOLS/jwttool && \
+git clone --depth 1 https://github.com/ticarpi/jwt_tool $TOOLS/jwttool && \
   cd $TOOLS/jwttool && \
   python3 -m pip install pycryptodomex && \
   chmod a+x jwt_tool.py && \
   ln -sf $TOOLS/jwttool/jwt_tool.py /usr/local/bin/jwttool
 
 # link finder
-RUN git clone --depth 1 https://github.com/GerbenJavado/LinkFinder.git $TOOLS/linkfinder && \
+git clone --depth 1 https://github.com/GerbenJavado/LinkFinder.git $TOOLS/linkfinder && \
   cd $TOOLS/linkfinder && \
   python3 -m pip install -r requirements.txt && \
   python3 setup.py install && \
@@ -221,27 +211,27 @@ RUN git clone --depth 1 https://github.com/GerbenJavado/LinkFinder.git $TOOLS/li
   ln -sf $TOOLS/linkfinder/linkfinder.py /usr/local/bin/linkfinder
 
 # masscan
-RUN git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/masscan && \
+git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/masscan && \
   cd $TOOLS/masscan && \
   make -j && \
   ln -sf $TOOLS/masscan/bin/masscan /usr/local/bin/masscan
 
 # meg
-RUN go get -u github.com/tomnomnom/meg
+go get -u github.com/tomnomnom/meg
 
 # metasploit
-RUN mkdir $TOOLS/metasploit && \
+mkdir $TOOLS/metasploit && \
   cd $TOOLS/metasploit && \
   curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
   chmod 755 msfinstall && \
   ./msfinstall
 
 # nuclei
-RUN go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei && \
+go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei && \
   git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
 # pagodo
-RUN git clone --depth 1 https://github.com/opsdisk/pagodo.git $TOOLS/pagodo && \
+git clone --depth 1 https://github.com/opsdisk/pagodo.git $TOOLS/pagodo && \
   cd $TOOLS/pagodo && \
   python3 -m pip install -r requirements.txt && \
   sed -i 's^#!/usr/bin/env python^#!/usr/bin/python3^g' pagodo.py && \
@@ -250,36 +240,36 @@ RUN git clone --depth 1 https://github.com/opsdisk/pagodo.git $TOOLS/pagodo && \
   ln -sf $TOOLS/pagodo/pagodo.py /usr/local/bin/pagodo
 
 # recon-ng
-RUN git clone --depth 1 https://github.com/lanmaster53/recon-ng.git $TOOLS/recon-ng && \
+git clone --depth 1 https://github.com/lanmaster53/recon-ng.git $TOOLS/recon-ng && \
   cd $TOOLS/recon-ng && \
   python3 -m pip install -r REQUIREMENTS && \
   chmod a+x recon-ng && \
   ln -sf $TOOLS/recon-ng/recon-ng /usr/local/bin/recon-ng
 
 # sherlock
-RUN git clone --depth 1 https://github.com/sherlock-project/sherlock $TOOLS/sherlock && \
+git clone --depth 1 https://github.com/sherlock-project/sherlock $TOOLS/sherlock && \
   cd $TOOLS/sherlock && \
   python3 -m pip install -r requirements.txt && \
   chmod a+x sherlock/sherlock.py && \
   ln -sf $TOOLS/sherlock/sherlock/sherlock.py /usr/local/bin/sherlock
 
 # social engineer toolkit
-RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $TOOLS/setoolkit && \
+git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $TOOLS/setoolkit && \
   cd $TOOLS/setoolkit && \
   python3 -m pip install -r requirements.txt || : && \
   python3 setup.py || :
 
 # subfinder
-RUN go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
 
 # subjs
-RUN go get -u -v github.com/lc/subjs
+go get -u -v github.com/lc/subjs
 
 # subjack
-RUN go get github.com/haccer/subjack
+go get github.com/haccer/subjack
 
 # sublist3r
-RUN git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r && \
+git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r && \
   cd $TOOLS/sublist3r && \
   python3 -m pip install -r requirements.txt && \
   sed -i 's^#!/usr/bin/env python^#!/usr/bin/python3^g' sublist3r.py && \
@@ -287,8 +277,9 @@ RUN git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist
   ln -sf $TOOLS/sublist3r/sublist3r.py /usr/local/bin/sublist3r
 
 # theharvester
+
 # Note: it needs to be installed in /etc/ as there are absolute refs in the code
-RUN git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester && \
+git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester && \
   cd /etc/theHarvester && \
   python3 -m pip install pipenv && \
   python3 -m pip install -r requirements/base.txt && \
@@ -297,50 +288,49 @@ RUN git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvest
   ln -sf /etc/theHarvester/theHarvester.py /usr/local/bin/theharvester
 
 # unfurl
-RUN go get -u github.com/tomnomnom/unfurl
+go get -u github.com/tomnomnom/unfurl
 
 # wafw00f
-RUN git clone --depth 1 https://github.com/enablesecurity/wafw00f.git $TOOLS/wafw00f && \
+git clone --depth 1 https://github.com/enablesecurity/wafw00f.git $TOOLS/wafw00f && \
   cd $TOOLS/wafw00f && \
   chmod a+x setup.py && \
   python3 setup.py install
 
 # wfuzz
-# RUN pip install wfuzz
+
+# pip install wfuzz
 
 # whatweb
-RUN git clone --depth 1 https://github.com/urbanadventurer/WhatWeb.git $TOOLS/whatweb && \
+git clone --depth 1 https://github.com/urbanadventurer/WhatWeb.git $TOOLS/whatweb && \
   cd $TOOLS/whatweb && \
   chmod a+x whatweb && \
   ln -sf $TOOLS/whatweb/whatweb /usr/local/bin/whatweb
 
 # wpscan
-RUN git clone --depth 1 https://github.com/wpscanteam/wpscan.git $TOOLS/wpscan && \
+git clone --depth 1 https://github.com/wpscanteam/wpscan.git $TOOLS/wpscan && \
   cd $TOOLS/wpscan && \
   gem install bundler && bundle install --without test && \
   gem install wpscan
 
 # xsstrike
-RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike && \
+git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike && \
   cd $TOOLS/xsstrike && \
   python3 -m pip install -r requirements.txt && \
   chmod a+x xsstrike.py && \
   ln -sf $TOOLS/xsstrike/xsstrike.py /usr/local/bin/xsstrike
 
-# ------------------------------
 # --- Wordlists ---
-# ------------------------------
 
 # seclists
-RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists
+ git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists
 
 # rockyou
-RUN curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b8d1eab059b4d7a567bf0a/wordlists/rockyou.txt.gz \
+curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b8d1eab059b4d7a567bf0a/wordlists/rockyou.txt.gz \
   -o $WORDLISTS/rockyou.txt.gz && \
   gunzip $WORDLISTS/rockyou.txt.gz
 
 # Symlink other wordlists
-RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlists ) $WORDLISTS/amass && \
+ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlists ) $WORDLISTS/amass && \
   ln -sf /usr/share/brutespray/wordlist $WORDLISTS/brutespray && \
   ln -sf /usr/share/dirb/wordlists $WORDLISTS/dirb && \
   ln -sf /usr/share/setoolkit/src/fasttrack/wordlist.txt $WORDLISTS/fasttrack.txt && \
@@ -348,30 +338,26 @@ RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlist
   ln -sf /usr/share/nmap/nselib/data/passwords.lst $WORDLISTS/nmap.lst && \
   ln -sf /etc/theHarvester/wordlists $WORDLISTS/theharvester
 
-# ------------------------------
 # --- Other utilities ---
-# ------------------------------
 
 # Kali reverse shells
-RUN git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/share/webshells && \
+git clone --depth 1 https://gitlab.com/kalilinux/packages/webshells.git /usr/share/webshells && \
   ln -s /usr/share/webshells $ADDONS/webshells
 
 # Copy the startup script across
 COPY ./startup.sh /startup.sh
 
-# ------------------------------
 # --- Config ---
-# ------------------------------
 
 # Set timezone
-RUN ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
+ln -fs /usr/share/zoneinfo/Australia/Brisbane /etc/localtime && \
   dpkg-reconfigure --frontend noninteractive tzdata
 
 # Easier to access list of nmap scripts
-RUN ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
+ln -s /usr/share/nmap/scripts/ $ADDONS/nmap
 
 # Proxychains config
-RUN echo "dynamic_chain" > /etc/proxychains.conf && \
+echo "dynamic_chain" > /etc/proxychains.conf && \
   echo "proxy_dns" >> /etc/proxychains.conf && \
   echo "tcp_read_time_out 15000" >> /etc/proxychains.conf && \
   echo "tcp_connect_time_out 8000" >> /etc/proxychains.conf && \
@@ -379,20 +365,14 @@ RUN echo "dynamic_chain" > /etc/proxychains.conf && \
   echo "socks5 127.0.0.1 9050" >> /etc/proxychains.conf
 
 # Common commands (aliases)
-RUN echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
+echo "alias myip='dig +short myip.opendns.com @resolver1.opendns.com'" >> ~/.zshrc
 
 # ZSH config
-RUN sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc && \
+sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc && \
   sed -i 's^# DISABLE_UPDATE_PROMPT="true"^DISABLE_UPDATE_PROMPT="true"^g' ~/.zshrc && \
   sed -i 's^# DISABLE_AUTO_UPDATE="true"^DISABLE_AUTO_UPDATE="true"^g' ~/.zshrc && \
   sed -i 's^plugins=(git)^plugins=(tmux nmap)^g' ~/.zshrc && \
   echo 'export EDITOR="nano"' >> ~/.zshrc && \
   git config --global oh-my-zsh.hide-info 1
 
-# ------------------------------
 # --- Finished ---
-# ------------------------------
-
-# Start up commands
-ENTRYPOINT ["bash", "/startup.sh"]
-CMD ["/bin/zsh"]
