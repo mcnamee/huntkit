@@ -120,7 +120,7 @@ docker build . -t mcnamee/huntkit
 | Tool | Description |
 | --- | --- |
 | FTP | _Connect to an FTP server._ <br> `ftp ftp.google.com` |
-| [Go](https://golang.org/) | The PHP programming language |
+| [Go](https://golang.org/) | The Go programming language |
 | [Interlace](https://github.com/codingo/Interlace) | _Easily turn single threaded command line applications into a fast, multi-threaded application._ <br> `interlace -tL targets.txt -threads 5 -c "gobuster dns -d _target_ -w wordlist.txt --noprogress --quiet >> _target_.txt" -v` |
 | [NodeJS](https://nodejs.org/) | _Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine._ |
 | [Oh My Zsh](https://ohmyz.sh/) | _Zsh is a framework for managing your zsh configuration, bundled with thousands of helpful functions, helpers, plugins, themes._ |
