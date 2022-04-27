@@ -44,7 +44,6 @@ RUN apt-get update && \
   perl \
   php \
   proxychains \
-  python2 \
   python3 \
   python3-pip \
   ssh \
@@ -97,19 +96,13 @@ RUN apt-get update && \
 
 # Install go
 RUN cd /opt && \
-  wget https://dl.google.com/go/go1.18.1.linux-amd64.tar.gz && \
-  tar -xvf go1.18.1.linux-amd64.tar.gz && \
-  rm -rf /opt/go1.18.1.linux-amd64.tar.gz && \
+  ARCH=$( arch | sed s/x86_64/amd64/ ) && \
+  wget https://dl.google.com/go/go1.18.1.linux-${ARCH}.tar.gz && \
+  tar -xvf go1.18.1.linux-${ARCH}.tar.gz && \
+  rm -rf /opt/go1.18.1.linux-${ARCH}.tar.gz && \
   mv go /usr/local
 
-# Install Pip (for Python2)
-RUN curl -sSL https://bootstrap.pypa.io/pip/3.4/get-pip.py -o get-pip.py && \
-  python2 get-pip.py && \
-  echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.zshrc && \
-  rm get-pip.py
-
-# Install Python3 common dependencies
-RUN pip install paramiko
+# Install Python common dependencies
 RUN python3 -m pip install --upgrade setuptools wheel paramiko
 
 # Install ZSH
