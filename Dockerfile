@@ -201,10 +201,10 @@ RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper $TOOLS/joh
   echo "alias john='${TOOLS}/john/run/john'" >> ~/.zshrc && \
   ./configure && make -s clean && make -sj4
 
-# jwt tool
+# jwttool
 RUN git clone --depth 1 https://github.com/ticarpi/jwt_tool $TOOLS/jwttool && \
   cd $TOOLS/jwttool && \
-  python3 -m pip install pycryptodomex && \
+  python3 -m pip install pycryptodomex termcolor && \
   chmod a+x jwt_tool.py && \
   ln -sf $TOOLS/jwttool/jwt_tool.py /usr/local/bin/jwttool
 
