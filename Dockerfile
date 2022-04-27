@@ -96,7 +96,7 @@ RUN apt-get update && \
 
 # Install go
 RUN cd /opt && \
-  ARCH=$( arch | sed s/x86_64/amd64/ ) && \
+  ARCH=$( arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/ ) && \
   wget https://dl.google.com/go/go1.18.1.linux-${ARCH}.tar.gz && \
   tar -xvf go1.18.1.linux-${ARCH}.tar.gz && \
   rm -rf /opt/go1.18.1.linux-${ARCH}.tar.gz && \
