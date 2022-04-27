@@ -121,7 +121,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # ------------------------------
 
 # amass
-RUN go get -v github.com/OWASP/Amass/v3/...
+RUN go install -v github.com/OWASP/Amass/v3/...@master
 
 # cloudfail
 RUN git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail && \
@@ -161,7 +161,7 @@ RUN git clone --depth 1 https://github.com/Mebus/cupp.git $TOOLS/cupp && \
 # dalfox
 RUN git clone --depth 1 https://github.com/hahwul/dalfox.git $TOOLS/dalfox && \
   cd $TOOLS/dalfox && \
-  go get && go install
+  go install
 
 # dnmasscan
 RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan && \
@@ -170,7 +170,7 @@ RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmass
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
 # dnsprobe
-RUN go get -v github.com/projectdiscovery/dnsx/cmd/dnsx
+RUN go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 
 # exploitdb (searchsploit)
 RUN git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
@@ -178,14 +178,14 @@ RUN git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOO
   ln -sf $TOOLS/exploitdb/searchsploit /usr/bin/searchsploit
 
 # fuff
-RUN go get github.com/ffuf/ffuf
+RUN go install github.com/ffuf/ffuf@latest
 
 # gau
-RUN go get -u -v github.com/lc/gau && \
+RUN go install github.com/lc/gau/v2/cmd/gau@latest && \
   echo "alias gau='/go/bin/gau'" >> ~/.zshrc
 
 # httpx
-RUN go get -v github.com/projectdiscovery/httpx/cmd/httpx
+RUN go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 
 # interlace
 RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
@@ -224,7 +224,7 @@ RUN git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/
   ln -sf $TOOLS/masscan/bin/masscan /usr/local/bin/masscan
 
 # meg
-RUN go get -u github.com/tomnomnom/meg
+RUN go install -v github.com/tomnomnom/meg@latest
 
 # metasploit
 RUN mkdir $TOOLS/metasploit && \
@@ -234,7 +234,7 @@ RUN mkdir $TOOLS/metasploit && \
   ./msfinstall
 
 # nuclei
-RUN go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei && \
+RUN go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
   git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
 # pagodo
@@ -267,13 +267,13 @@ RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $T
   python3 setup.py || :
 
 # subfinder
-RUN go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+RUN go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 
 # subjs
-RUN go get -u -v github.com/lc/subjs
+RUN go install -v github.com/lc/subjs@latest
 
 # subjack
-RUN go get github.com/haccer/subjack
+RUN go install -v github.com/haccer/subjack@latest
 
 # sublist3r
 RUN git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r && \
@@ -294,7 +294,7 @@ RUN git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvest
   ln -sf /etc/theHarvester/theHarvester.py /usr/local/bin/theharvester
 
 # unfurl
-RUN go get -u github.com/tomnomnom/unfurl
+RUN go install -v github.com/tomnomnom/unfurl@latest
 
 # wafw00f
 RUN git clone --depth 1 https://github.com/enablesecurity/wafw00f.git $TOOLS/wafw00f && \
