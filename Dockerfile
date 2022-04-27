@@ -148,7 +148,7 @@ RUN git clone --depth 1 https://github.com/christophetd/CloudFlair.git $TOOLS/cl
 # commix
 RUN git clone --depth 1 https://github.com/commixproject/commix.git $TOOLS/commix && \
   cd $TOOLS/commix && \
-  sed -i 's^#!/usr/bin/env python^#!/usr/bin/python2^g' commix.py && \
+  sed -i 's^#!/usr/bin/env python^#!/usr/bin/python3^g' commix.py && \
   chmod a+x commix.py && \
   ln -sf $TOOLS/commix/commix.py /usr/local/bin/commix
 
