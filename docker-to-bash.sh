@@ -44,7 +44,7 @@ sed -i'.bak' -e '/^  rm -rf \/var\/lib\/apt\/lists\/\*/d' $FILENAME
 sed -i'.bak' -e 's/apt-get clean && .*/echo "Placeholder"/g' $FILENAME
 
 # We don't want the script interupted to switch Shells
-sed -i'.bak' -e 's/chsh -s $(which zsh)/echo "Placeholder"/g' $FILENAME
+sed -i'.bak' -e 's/chsh -s $(which zsh)/&& echo "Placeholder"/g' $FILENAME
 
 # Add PATH
 echo "echo \"export PATH=\${PATH}\" >> ~/.zshrc" >> $FILENAME

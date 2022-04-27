@@ -100,7 +100,7 @@ python3 -m pip install --upgrade setuptools wheel paramiko
 
 # Install ZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
-  echo "Placeholder"
+  chsh -s $(which zsh)chsh -s $(which zsh) echo "Placeholder"
 
 # --- Tools ---
 
