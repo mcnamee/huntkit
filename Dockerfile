@@ -312,10 +312,7 @@ RUN git clone --depth 1 https://github.com/urbanadventurer/WhatWeb.git $TOOLS/wh
   ln -sf $TOOLS/whatweb/whatweb /usr/local/bin/whatweb
 
 # wpscan
-RUN git clone --depth 1 https://github.com/wpscanteam/wpscan.git $TOOLS/wpscan && \
-  cd $TOOLS/wpscan && \
-  gem install bundler && bundle install --without test && \
-  gem install wpscan
+RUN gem install wpscan
 
 # xsstrike
 RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike && \
