@@ -29,6 +29,7 @@ RUN apt-get update && \
   build-essential \
   curl \
   dnsutils \
+  golang \
   gcc \
   git \
   iputils-ping \
@@ -94,13 +95,6 @@ RUN apt-get update && \
   powerline && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
-
-# Install go
-RUN cd /opt && \
-  wget https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz && \
-  tar -xvf go1.15.2.linux-amd64.tar.gz && \
-  rm -rf /opt/go1.15.2.linux-amd64.tar.gz && \
-  mv go /usr/local
 
 # Install Pip (for Python2)
 RUN curl -sSL https://bootstrap.pypa.io/pip/3.4/get-pip.py -o get-pip.py && \
