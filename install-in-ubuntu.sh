@@ -34,10 +34,12 @@ apt-get update && \
   nano \
   netcat \
   net-tools \
+  nodejs \
+  npm \
   perl \
   php \
   proxychains \
-  python \
+  python2 \
   python3 \
   python3-pip \
   ssh \
@@ -88,19 +90,14 @@ apt-get update && \
 
 # Install go
 cd /opt && \
-  wget https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz && \
-  tar -xvf go1.15.2.linux-amd64.tar.gz && \
-  rm -rf /opt/go1.15.2.linux-amd64.tar.gz && \
+  wget https://dl.google.com/go/go1.18.1.linux-amd64.tar.gz && \
+  tar -xvf go1.18.1.linux-amd64.tar.gz && \
+  rm -rf /opt/go1.18.1.linux-amd64.tar.gz && \
   mv go /usr/local
-
-# Install Node
-curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-  && apt install -y --no-install-recommends nodejs && \
-  echo "Placeholder"
 
 # Install Pip (for Python2)
 curl -sSL https://bootstrap.pypa.io/pip/3.4/get-pip.py -o get-pip.py && \
-  python get-pip.py && \
+  python2 get-pip.py && \
   echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.zshrc && \
   rm get-pip.py
 
@@ -115,15 +112,21 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # --- Tools ---
 
 # amass
-go get -v github.com/OWASP/Amass/v3/...
+go install -v github.com/OWASP/Amass/v3/...@master
 
-# cloudfail
-git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail && \
-  cd $TOOLS/cloudfail && \
-  python3 -m pip install -r requirements.txt && \
-  sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' cloudfail.py && \
-  chmod a+x cloudfail.py && \
-  ln -sf $TOOLS/cloudfail/cloudfail.py /usr/local/bin/cloudfail
+# cloudfail - not working with latest python3
+
+# git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail && \
+
+#   cd $TOOLS/cloudfail && \
+
+#   python3 -m pip install -r requirements.txt && \
+
+#   sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' cloudfail.py && \
+
+#   chmod a+x cloudfail.py && \
+
+#   ln -sf $TOOLS/cloudfail/cloudfail.py /usr/local/bin/cloudfail
 
 # breach-parse
 git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
@@ -142,7 +145,7 @@ git clone --depth 1 https://github.com/christophetd/CloudFlair.git $TOOLS/cloudf
 # commix
 git clone --depth 1 https://github.com/commixproject/commix.git $TOOLS/commix && \
   cd $TOOLS/commix && \
-  sed -i 's^#!/usr/bin/env python^#!/usr/bin/python2^g' commix.py && \
+  sed -i 's^#!/usr/bin/env python^#!/usr/bin/python3^g' commix.py && \
   chmod a+x commix.py && \
   ln -sf $TOOLS/commix/commix.py /usr/local/bin/commix
 
@@ -155,7 +158,7 @@ git clone --depth 1 https://github.com/Mebus/cupp.git $TOOLS/cupp && \
 # dalfox
 git clone --depth 1 https://github.com/hahwul/dalfox.git $TOOLS/dalfox && \
   cd $TOOLS/dalfox && \
-  go get && go install
+  go install
 
 # dnmasscan
 git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan && \
@@ -164,7 +167,7 @@ git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan 
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
 # dnsprobe
-go get -v github.com/projectdiscovery/dnsx/cmd/dnsx
+go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 
 # exploitdb (searchsploit)
 git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
@@ -172,14 +175,14 @@ git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/e
   ln -sf $TOOLS/exploitdb/searchsploit /usr/bin/searchsploit
 
 # fuff
-go get github.com/ffuf/ffuf
+go install github.com/ffuf/ffuf@latest
 
 # gau
-go get -u -v github.com/lc/gau && \
+go install github.com/lc/gau/v2/cmd/gau@latest && \
   echo "alias gau='/go/bin/gau'" >> ~/.zshrc
 
 # httpx
-go get -v github.com/projectdiscovery/httpx/cmd/httpx
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 
 # interlace
 git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
@@ -195,10 +198,10 @@ git clone --depth 1 https://github.com/magnumripper/JohnTheRipper $TOOLS/john &&
   echo "alias john='${TOOLS}/john/run/john'" >> ~/.zshrc && \
   ./configure && make -s clean && make -sj4
 
-# jwt tool
+# jwttool
 git clone --depth 1 https://github.com/ticarpi/jwt_tool $TOOLS/jwttool && \
   cd $TOOLS/jwttool && \
-  python3 -m pip install pycryptodomex && \
+  python3 -m pip install pycryptodomex termcolor && \
   chmod a+x jwt_tool.py && \
   ln -sf $TOOLS/jwttool/jwt_tool.py /usr/local/bin/jwttool
 
@@ -218,7 +221,7 @@ git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/mass
   ln -sf $TOOLS/masscan/bin/masscan /usr/local/bin/masscan
 
 # meg
-go get -u github.com/tomnomnom/meg
+go install -v github.com/tomnomnom/meg@latest
 
 # metasploit
 mkdir $TOOLS/metasploit && \
@@ -228,7 +231,7 @@ mkdir $TOOLS/metasploit && \
   ./msfinstall
 
 # nuclei
-go get -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei && \
+go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
   git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
 # pagodo
@@ -261,13 +264,13 @@ git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $TOOLS
   python3 setup.py || :
 
 # subfinder
-go get -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 
 # subjs
-go get -u -v github.com/lc/subjs
+go install -v github.com/lc/subjs@latest
 
 # subjack
-go get github.com/haccer/subjack
+go install -v github.com/haccer/subjack@latest
 
 # sublist3r
 git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r && \
@@ -289,7 +292,7 @@ git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester &
   ln -sf /etc/theHarvester/theHarvester.py /usr/local/bin/theharvester
 
 # unfurl
-go get -u github.com/tomnomnom/unfurl
+go install -v github.com/tomnomnom/unfurl@latest
 
 # wafw00f
 git clone --depth 1 https://github.com/enablesecurity/wafw00f.git $TOOLS/wafw00f && \
@@ -308,10 +311,7 @@ git clone --depth 1 https://github.com/urbanadventurer/WhatWeb.git $TOOLS/whatwe
   ln -sf $TOOLS/whatweb/whatweb /usr/local/bin/whatweb
 
 # wpscan
-git clone --depth 1 https://github.com/wpscanteam/wpscan.git $TOOLS/wpscan && \
-  cd $TOOLS/wpscan && \
-  gem install bundler && bundle install --without test && \
-  gem install wpscan
+gem install wpscan
 
 # xsstrike
 git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike && \
