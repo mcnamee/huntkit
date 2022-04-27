@@ -40,6 +40,7 @@ RUN apt-get update && \
   netcat \
   net-tools \
   nodejs \
+  npm \
   perl \
   php \
   proxychains \
