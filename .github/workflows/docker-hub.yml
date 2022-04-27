@@ -31,8 +31,8 @@ jobs:
 
       - name: Testing
         run: |
+          ls -lah
           pwd
-          ls
 
       - name: Build and push Docker image
         id: docker_build
