@@ -97,9 +97,9 @@ RUN apt-get update && \
 
 # Install go
 RUN cd /opt && \
-  wget https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz && \
-  tar -xvf go1.15.2.linux-amd64.tar.gz && \
-  rm -rf /opt/go1.15.2.linux-amd64.tar.gz && \
+  wget https://dl.google.com/go/go1.18.1.linux-amd64.tar.gz && \
+  tar -xvf go1.18.1.linux-amd64.tar.gz && \
+  rm -rf /opt/go1.18.1.linux-amd64.tar.gz && \
   mv go /usr/local
 
 # Install Pip (for Python2)
