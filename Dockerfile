@@ -39,6 +39,7 @@ RUN apt-get update && \
   nano \
   netcat \
   net-tools \
+  nodejs \
   perl \
   php \
   proxychains \
@@ -99,12 +100,6 @@ RUN cd /opt && \
   tar -xvf go1.15.2.linux-amd64.tar.gz && \
   rm -rf /opt/go1.15.2.linux-amd64.tar.gz && \
   mv go /usr/local
-
-# Install Node
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-  apt install -y --no-install-recommends nodejs && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
 
 # Install Pip (for Python2)
 RUN curl -sSL https://bootstrap.pypa.io/pip/3.4/get-pip.py -o get-pip.py && \
