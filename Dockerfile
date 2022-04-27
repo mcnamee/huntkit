@@ -104,7 +104,7 @@ RUN cd /opt && \
 
 # Install Pip (for Python2)
 RUN curl -sSL https://bootstrap.pypa.io/pip/3.4/get-pip.py -o get-pip.py && \
-  python get-pip.py && \
+  python2 get-pip.py && \
   echo "PATH=$HOME/.local/bin/:$PATH" >> ~/.zshrc && \
   rm get-pip.py
 
