@@ -1,6 +1,6 @@
 FROM ubuntu
 
-LABEL maintainer="Matt Mcnamee"
+LABEL maintainer="Matt McNamee"
 
 # Environment Variables
 ENV HOME=/root
