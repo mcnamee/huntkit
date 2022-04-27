@@ -101,8 +101,8 @@ RUN cd /opt && \
   mv go /usr/local
 
 # Install Node
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-  && apt install -y --no-install-recommends nodejs && \
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+  apt install -y --no-install-recommends nodejs && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
