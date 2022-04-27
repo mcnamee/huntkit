@@ -22,11 +22,15 @@
 
 ## What is this?
 
-HuntKit is a collection of penetration testing, bug bounty hunting, capture the flag, red teaming tools in a single Docker image. Simply run the image and start using the tools.
+HuntKit is a collection of [penetration testing, bug bounty hunting, capture the flag, red teaming] tools in a single Docker image. Simply run the image and start using the tools.
 
 __Why?__
 
 I got sick of waiting for VitualBox to start, Kali to boot, then dealing with the slugish-ness of operating in a VM. I still use Kali for certain tasks. But for a quick nmap scan (for example), using this container is *a lot* quicker.
+
+- The tool run very __quick__ (opposed to running inside a VM for example)
+- Simpler to keep the tools __up to date__
+- __Disposable__ - Something broken? Simply prune and start again
 
 ## Instructions
 
@@ -34,33 +38,47 @@ I got sick of waiting for VitualBox to start, Kali to boot, then dealing with th
 
 ```bash
 docker run -it mcnamee/huntkit
-
-# - OR -
-
-# Advanced:
-# Line 2: maps ~/Projects to the Docker /root/projects
-# Line 3: Allows OpenVPN
-# Line 4: Opens and maps port 4444 (for listeners such as Metasploit)
-# Line 5: Sets the machine's hostname to huntkit
-docker run -it \
-  -v ~/Projects:/root/projects \
-  --cap-add=NET_ADMIN --device=/dev/net/tun \
-  -p 4444:4444 \
-  -h huntkit \
-  mcnamee/huntkit
 ```
+
+<details>
+  <summary>Advanced usage</summary>
+
+  ```bash
+  # Advanced:
+  # Line 2: maps ~/Loot to the Docker's /root/loot
+  # Line 3: Allows OpenVPN usage
+  # Line 4: Opens and maps port 4444 (for listeners such as Metasploit)
+  # Line 5: Sets the machine's hostname to huntkit
+  docker run -it \
+    -v ~/Loot:/root/loot \
+    --cap-add=NET_ADMIN --device=/dev/net/tun \
+    -p 4444:4444 \
+    -h huntkit \
+    mcnamee/huntkit
+  ```
+</details>
+
+<details>
+  <summary>(Update) Pull the latest from Docker Hub</summary>
+
+  ```bash
+  docker pull mcnamee/huntkit
+  ```
+</details>
+
+<details>
+  <summary>Build it yourself</summary>
+
+  ```bash
+  # 1. Clone the repo
+  git clone https://github.com/mcnamee/huntkit.git && cd huntkit
+
+  # 2. Build the image
+  docker build . -t mcnamee/huntkit
+  ```
+</details>
 
 [![asciicast](https://asciinema.org/a/403549.svg)](https://asciinema.org/a/403549)
-
-### Build
-
-```bash
-# 1. Clone the repo
-git clone https://github.com/mcnamee/huntkit.git && cd huntkit
-
-# 2. Build the image
-docker build . -t mcnamee/huntkit
-```
 
 ## Tools
 
@@ -70,7 +88,6 @@ docker build . -t mcnamee/huntkit
 | --- | --- |
 | [amass](https://github.com/OWASP/Amass) | _Network mapping of attack surfaces and external asset discovery using open source information gathering and active reconnaissance techniques._ <br>`amass enum -v -src -ip -brute -min-for-recursive 2 -d kali.org` |
 | [brutespray](https://github.com/x90skysn3k/brutespray) | _Service scanner by bruteforcing._ <br>`brutespray --file nmap.gnmap` |
-| [cloudfail](https://github.com/m0rtem/CloudFail) | _CloudFail is a tool to find origin servers of websites protected by CloudFlare._ <br> `cloudfail --target resound.ly` |
 | [cloudflair](https://github.com/christophetd/CloudFlair) | _CloudFlair is a tool to find origin servers of websites protected by CloudFlare who are publicly exposed and don't restrict network access to the CloudFlare IP ranges as they should._ <br> `export CENSYS_API_ID=... && export CENSYS_API_SECRET=...` <br> `cloudflair resound.ly` |
 | [commix](https://github.com/commixproject/commix) | _Command injection exploiter - used to test web applications with the view to find bugs, errors or vulnerabilities related to command injection attacks._ <br> `commix --url="http://192.168.0.23/commix-testbed/scenarios/referer/referer(classic).php" --level=3` |
 | [dalfox](https://github.com/hahwul/dalfox) | _XSS Scanning and Parameter Analysis tool._ <br> `dalfox url http://testphp.vulnweb.com/listproducts.php\?cat\=123 -b https://hahwul.xss.ht` |
@@ -128,7 +145,7 @@ docker build . -t mcnamee/huntkit
 | [Perl](https://www.perl.org/) | _Perl is a highly capable, feature-rich programming language with over 30 years of development._ |
 | [PHP](https://www.php.net/) | _The PHP scripting language._ |
 | [Proxychains](https://github.com/haad/proxychains) | _Redirects connections through SOCKS4a/5 or HTTP proxies._ |
-| [Python 2 & 3](https://www.python.org/) | _The Python programming language_ |
+| [Python 3](https://www.python.org/) | _The Python programming language_ |
 | [Ruby](https://www.ruby-lang.org/) | _A dynamic, open source programming language with a focus on simplicity and productivity. It has an elegant syntax that is natural to read and easy to write._ |
 | [smbclient](https://installlion.com/kali/kali/main/s/smbclient/install/index.html) | `smbclient \\192.168.0.45\Media` |
 | [Tor](https://www.torproject.org/) | _Browse Privately._ |
