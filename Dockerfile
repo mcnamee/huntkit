@@ -123,13 +123,13 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # amass
 RUN go install -v github.com/OWASP/Amass/v3/...@master
 
-# cloudfail
-RUN git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail && \
-  cd $TOOLS/cloudfail && \
-  python3 -m pip install -r requirements.txt && \
-  sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' cloudfail.py && \
-  chmod a+x cloudfail.py && \
-  ln -sf $TOOLS/cloudfail/cloudfail.py /usr/local/bin/cloudfail
+# cloudfail - not working with latest python3
+# RUN git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail && \
+#   cd $TOOLS/cloudfail && \
+#   python3 -m pip install -r requirements.txt && \
+#   sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' cloudfail.py && \
+#   chmod a+x cloudfail.py && \
+#   ln -sf $TOOLS/cloudfail/cloudfail.py /usr/local/bin/cloudfail
 
 # breach-parse
 RUN git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
