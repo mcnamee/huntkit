@@ -42,7 +42,7 @@ RUN apt-get update && \
   perl \
   php \
   proxychains \
-  python \
+  python2 \
   python3 \
   python3-pip \
   ssh \
