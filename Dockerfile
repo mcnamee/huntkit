@@ -114,7 +114,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # ------------------------------
 
 # amass
-RUN go install -v github.com/OWASP/Amass/v3/...@master
+RUN go install -v github.com/owasp-amass/amass/v3/...@master
 
 # cloudfail - not working with latest python3
 # RUN git clone --depth 1 https://github.com/m0rtem/CloudFail.git $TOOLS/cloudfail && \
