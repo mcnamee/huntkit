@@ -262,9 +262,6 @@ go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 # subjs
 go install -v github.com/lc/subjs@latest
 
-# subjack
-go install -v github.com/haccer/subjack@latest
-
 # sublist3r
 git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r && \
   cd $TOOLS/sublist3r && \
