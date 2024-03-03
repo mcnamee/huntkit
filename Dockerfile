@@ -154,7 +154,8 @@ RUN git clone --depth 1 https://github.com/Mebus/cupp.git $TOOLS/cupp && \
 # dalfox
 RUN git clone --depth 1 https://github.com/hahwul/dalfox.git $TOOLS/dalfox && \
   cd $TOOLS/dalfox && \
-  go install
+  go install && \
+  rm -rf $TOOLS/dalfox
 
 # dnmasscan
 RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan && \
@@ -372,6 +373,13 @@ RUN sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc && \
   sed -i 's^plugins=(git)^plugins=(tmux nmap)^g' ~/.zshrc && \
   echo 'export EDITOR="nano"' >> ~/.zshrc && \
   git config --global oh-my-zsh.hide-info 1
+
+# Clean up space - remove version control
+RUN cd $HOME && find . -name '.git' -type d -exec rm -rf {} + && \
+  cd $TOOLS && find . -name '.git' -type d -exec rm -rf {} + && \
+  cd $ADDONS && find . -name '.git' -type d -exec rm -rf {} + && \
+  cd $WORDLISTS && find . -name '.git' -type d -exec rm -rf {} + && \
+  rm -rf /root/.cache
 
 # ------------------------------
 # --- Finished ---
