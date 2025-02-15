@@ -54,3 +54,8 @@ echo "chsh -s \$(which zsh)" >> $FILENAME
 
 # Remove Backup file
 rm "${FILENAME}.bak"
+
+# Send output
+echo '---------------------------'
+echo '--- Done ---'
+echo '---------------------------'
