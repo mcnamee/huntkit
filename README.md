@@ -78,6 +78,24 @@ docker run -it mcnamee/huntkit
   ```
 </details>
 
+<details>
+  <summary>Push to Docker Hub</summary>
+
+  ```bash
+  # 1. Build the image
+  docker build . -t mcnamee/huntkit
+
+  # 2. Login to Docker Hub
+  docker login --username=supergates
+
+  # 3. Push the image
+  docker push mcnamee/huntkit
+
+  # 4. Delete all local images to start from scratch
+  docker image prune -a
+  ```
+</details>
+
 [![asciicast](https://asciinema.org/a/403549.svg)](https://asciinema.org/a/403549)
 
 ## Tools
