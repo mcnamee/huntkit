@@ -111,9 +111,11 @@ docker run -it mcnamee/huntkit
 | [dirb](https://tools.kali.org/web-applications/dirb) | _Looks for existing (and/or hidden) Web Objects, by launching a dictionary based attack against a web server and analyzing the response._ <br> `dirb https://kali.org $WORDLISTS/seclists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt` |
 | [dnmasscan](https://github.com/rastating/dnmasscan) | _dnmasscan is a bash script to automate resolving a file of domain names and subsequentlly scanning them using masscan._ <br> `dnmasscan listofdomains.txt dns.log -p80,443 - oG masscan.log` |
 | [dnsx](https://github.com/projectdiscovery/dnsx) | _Allows you to run multiple probers using retryabledns library, that allows you to perform multiple DNS queries of your choice with a list of user supplied resolvers._ <br> <code>cat domains.txt &#124; dnsx</code> |
+| [feroxbuster](https://github.com/epi052/feroxbuster) | _A fast, simple, recursive content discovery tool written in Rust._ <br> `feroxbuster -u https://example.com` |
 | [ffuf](https://github.com/ffuf/ffuf) | _A fast web fuzzer._ <br> - `ffuf -w /path/to/postdata.txt -X POST -d "username=admin\&password=FUZZ" -u https://target/login.php -fc 401` |
 | [gau](https://github.com/lc/gau) | _getallurls (gau) fetches known URLs from AlienVault's Open Threat Exchange, the Wayback Machine, and Common Crawl for any given domain._ <br> - `gau example.com` |
 | [httpx](https://github.com/projectdiscovery/httpx) | _Take a list of domains and probe for working http and https servers._ <br> <code>cat domains.txt &#124; httpx</code> |
+| [katana](https://github.com/projectdiscovery/katana) | _A next-generation crawling and spidering framework._ <br> `katana -u https://example.com` |
 | [linkfinder](https://github.com/GerbenJavado/LinkFinder) | _Discover endpoints and their parameters in JavaScript files._ <br> `linkfinder -i https://example.com -d -o cli` |
 | [masscan](https://github.com/robertdavidgraham/masscan) | _An Internet-scale port scanner._ <br> `masscan -p1-65535 -iL listofips.txt --max-rate 1800 -oG masscan.log` |
 | [meg](https://github.com/robertdavidgraham/masscan) | _A tool for fetching lots of URLs but still being 'nice' to servers._ <br> `meg paths.txt hosts.txt` |
@@ -128,6 +130,7 @@ docker run -it mcnamee/huntkit
 | [sublist3r](https://github.com/aboul3la/Sublist3r) | _Enumerates subdomains using many search engines such as Google, Yahoo, Bing, Baidu and more._ <br> `sublist3r -d kali.org` |
 | [sqlmap](http://sqlmap.org/) | _Automates the process of detecting and exploiting SQL injection flaws and taking over of database servers_ <br> `sqlmap -u https://example.com --forms --crawl=10 --level=5 --risk=3` |
 | [theharvester](https://tools.kali.org/information-gathering/theharvester) | _Gather emails, subdomains, hosts, employee names, open ports and banners from different public sources like search engines, PGP key servers and SHODAN computer database._ <br> <code>theharvester -d kali.org -b "bing, certspotter, dnsdumpster, dogpile, duckduckgo, google, hunter, linkedin, linkedin_links, twitter, yahoo"</code> |
+| [uncover](https://github.com/projectdiscovery/uncover) | _Quickly discover exposed hosts on the internet using multiple search engines._ <br> `uncover -q "ssl.cert.subject.CN:example.com"` |
 | [wafw00f](https://github.com/enablesecurity/wafw00f) | _Web Application Firewall Fingerprinting Tool._ <br> `wafw00f resound.ly` |
 | [whatweb](https://github.com/urbanadventurer/WhatWeb) | _Scans websites and highlights the CMS used, JavaScript libraries, web servers, version numbers, email addresses, account IDs, web framework modules, SQL errors, and more._ <br> `whatweb kali.org` |
 | [wpscan](https://github.com/wpscanteam/wpscan) | _WordPress Security Scanner._ <br> `wpscan --url kali.org` |
@@ -158,6 +161,7 @@ docker run -it mcnamee/huntkit
 | [NodeJS](https://nodejs.org/) | _Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine._ |
 | [Oh My Zsh](https://ohmyz.sh/) | _Zsh is a framework for managing your zsh configuration, bundled with thousands of helpful functions, helpers, plugins, themes._ |
 | [OpenVPN](https://openvpn.net/) | _Connect to a VPN._ <br> Add `--cap-add=NET_ADMIN --device=/dev/net/tun` to the `docker run` to use OpenVPN. |
+| [pdtm](https://github.com/projectdiscovery/pdtm) | _ProjectDiscovery Tool Manager - install and manage all ProjectDiscovery tools._ <br> `pdtm -install-all` |
 | [Perl](https://www.perl.org/) | _Perl is a highly capable, feature-rich programming language with over 30 years of development._ |
 | [PHP](https://www.php.net/) | _The PHP scripting language._ |
 | [Proxychains](https://github.com/haad/proxychains) | _Redirects connections through SOCKS4a/5 or HTTP proxies._ |

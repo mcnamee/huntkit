@@ -281,15 +281,19 @@ RUN go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest && \
   pdtm -install-all
 
 # feroxbuster
-RUN curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh | bash -s $HOME/.local/bin && \
-  ln -sf $HOME/.local/bin/feroxbuster /usr/local/bin/feroxbuster
+RUN ARCH=$(uname -m) && \
+  curl -sL "https://github.com/epi052/feroxbuster/releases/latest/download/${ARCH}-linux-feroxbuster.zip" -o /tmp/feroxbuster.zip && \
+  unzip -o /tmp/feroxbuster.zip -d /usr/local/bin && \
+  chmod +x /usr/local/bin/feroxbuster && \
+  rm /tmp/feroxbuster.zip
 
 # ------------------------------
 # --- Wordlists ---
 # ------------------------------
 
 # seclists
-RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists
+RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists && \
+  ln -sf $WORDLISTS/seclists /usr/share/seclists
 
 # rockyou
 RUN curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b8d1eab059b4d7a567bf0a/wordlists/rockyou.txt.gz \
@@ -297,7 +301,7 @@ RUN curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b
   gunzip $WORDLISTS/rockyou.txt.gz
 
 # Symlink other wordlists
-RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlists ) $WORDLISTS/amass && \
+RUN ln -sf $(find /go/pkg/mod/github.com -type d -name wordlists -path "*amass*" 2>/dev/null | head -1) $WORDLISTS/amass || true && \
   ln -sf /usr/share/brutespray/wordlist $WORDLISTS/brutespray && \
   ln -sf /usr/share/dirb/wordlists $WORDLISTS/dirb && \
   ln -sf /usr/share/setoolkit/src/fasttrack/wordlist.txt $WORDLISTS/fasttrack.txt && \
