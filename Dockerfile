@@ -146,8 +146,6 @@ RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmass
   chmod a+x dnmasscan && \
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
-# dnsprobe
-RUN go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 
 # exploitdb (searchsploit)
 RUN git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
@@ -161,8 +159,6 @@ RUN go install github.com/ffuf/ffuf@latest
 RUN go install github.com/lc/gau/v2/cmd/gau@latest && \
   echo "alias gau='/go/bin/gau'" >> ~/.zshrc
 
-# httpx
-RUN go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 
 # interlace
 RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
@@ -210,9 +206,8 @@ RUN mkdir $TOOLS/metasploit && \
   chmod 755 msfinstall && \
   ./msfinstall
 
-# nuclei
-RUN go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
-  git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
+# nuclei templates (nuclei itself installed via pdtm)
+RUN git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
 # pagodo
 RUN git clone --depth 1 https://github.com/opsdisk/pagodo.git $TOOLS/pagodo && \
@@ -236,8 +231,6 @@ RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $T
   python3 -m pip install --break-system-packages -r requirements.txt || : && \
   python3 setup.py || :
 
-# subfinder
-RUN go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 
 # subjs
 RUN go install -v github.com/lc/subjs@latest
@@ -254,10 +247,7 @@ RUN git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist
 # Note: it needs to be installed in /etc/ as there are absolute refs in the code
 RUN git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester && \
   cd /etc/theHarvester && \
-  python3 -m pip install --break-system-packages pipenv && \
-  python3 -m pip install --break-system-packages -r requirements/base.txt && \
-  sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' theHarvester.py && \
-  chmod a+x theHarvester.py && \
+  python3 -m pip install --break-system-packages . && \
   ln -sf /etc/theHarvester/theHarvester.py /usr/local/bin/theharvester
 
 # unfurl
@@ -285,12 +275,26 @@ RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike &
   chmod a+x xsstrike.py && \
   ln -sf $TOOLS/xsstrike/xsstrike.py /usr/local/bin/xsstrike
 
+# pdtm - ProjectDiscovery Tool Manager
+# Install pdtm first, then use it to install all ProjectDiscovery tools
+RUN go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest && \
+  pdtm -install-all && \
+  pip uninstall httpx --break-system-packages -y || true
+
+# feroxbuster
+RUN ARCH=$(uname -m) && \
+  curl -sL "https://github.com/epi052/feroxbuster/releases/latest/download/${ARCH}-linux-feroxbuster.zip" -o /tmp/feroxbuster.zip && \
+  unzip -o /tmp/feroxbuster.zip -d /usr/local/bin && \
+  chmod +x /usr/local/bin/feroxbuster && \
+  rm /tmp/feroxbuster.zip
+
 # ------------------------------
 # --- Wordlists ---
 # ------------------------------
 
 # seclists
-RUN  git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists
+RUN git clone --depth 1 https://github.com/danielmiessler/SecLists.git $WORDLISTS/seclists && \
+  ln -sf $WORDLISTS/seclists /usr/share/seclists
 
 # rockyou
 RUN curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b8d1eab059b4d7a567bf0a/wordlists/rockyou.txt.gz \
@@ -298,7 +302,7 @@ RUN curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b
   gunzip $WORDLISTS/rockyou.txt.gz
 
 # Symlink other wordlists
-RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlists ) $WORDLISTS/amass && \
+RUN ln -sf $(find /go/pkg/mod/github.com -type d -name wordlists -path "*amass*" 2>/dev/null | head -1) $WORDLISTS/amass || true && \
   ln -sf /usr/share/brutespray/wordlist $WORDLISTS/brutespray && \
   ln -sf /usr/share/dirb/wordlists $WORDLISTS/dirb && \
   ln -sf /usr/share/setoolkit/src/fasttrack/wordlist.txt $WORDLISTS/fasttrack.txt && \
@@ -345,6 +349,7 @@ RUN sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc && \
   sed -i 's^# DISABLE_AUTO_UPDATE="true"^DISABLE_AUTO_UPDATE="true"^g' ~/.zshrc && \
   sed -i 's^plugins=(git)^plugins=(tmux nmap)^g' ~/.zshrc && \
   echo 'export EDITOR="nano"' >> ~/.zshrc && \
+  echo 'export PATH="$PATH:/root/.pdtm/go/bin"' >> ~/.zshrc && \
   git config --global oh-my-zsh.hide-info 1
 
 # Clean up space - remove version control
