@@ -278,7 +278,8 @@ RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike &
 # pdtm - ProjectDiscovery Tool Manager
 # Install pdtm first, then use it to install all ProjectDiscovery tools
 RUN go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest && \
-  pdtm -install-all
+  pdtm -install-all && \
+  pip uninstall httpx --break-system-packages -y || true
 
 # feroxbuster
 RUN ARCH=$(uname -m) && \
