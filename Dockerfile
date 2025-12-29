@@ -146,8 +146,6 @@ RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmass
   chmod a+x dnmasscan && \
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
-# dnsprobe
-RUN go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 
 # exploitdb (searchsploit)
 RUN git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
@@ -161,8 +159,6 @@ RUN go install github.com/ffuf/ffuf@latest
 RUN go install github.com/lc/gau/v2/cmd/gau@latest && \
   echo "alias gau='/go/bin/gau'" >> ~/.zshrc
 
-# httpx
-RUN go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 
 # interlace
 RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
@@ -210,9 +206,8 @@ RUN mkdir $TOOLS/metasploit && \
   chmod 755 msfinstall && \
   ./msfinstall
 
-# nuclei
-RUN go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
-  git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
+# nuclei templates (nuclei itself installed via pdtm)
+RUN git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
 # pagodo
 RUN git clone --depth 1 https://github.com/opsdisk/pagodo.git $TOOLS/pagodo && \
@@ -236,8 +231,6 @@ RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $T
   python3 -m pip install --break-system-packages -r requirements.txt || : && \
   python3 setup.py || :
 
-# subfinder
-RUN go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 
 # subjs
 RUN go install -v github.com/lc/subjs@latest
@@ -254,10 +247,7 @@ RUN git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist
 # Note: it needs to be installed in /etc/ as there are absolute refs in the code
 RUN git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester && \
   cd /etc/theHarvester && \
-  python3 -m pip install --break-system-packages pipenv && \
-  python3 -m pip install --break-system-packages -r requirements/base.txt && \
-  sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' theHarvester.py && \
-  chmod a+x theHarvester.py && \
+  python3 -m pip install --break-system-packages . && \
   ln -sf /etc/theHarvester/theHarvester.py /usr/local/bin/theharvester
 
 # unfurl
@@ -284,6 +274,15 @@ RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git $TOOLS/xsstrike &
   python3 -m pip install --break-system-packages -r requirements.txt && \
   chmod a+x xsstrike.py && \
   ln -sf $TOOLS/xsstrike/xsstrike.py /usr/local/bin/xsstrike
+
+# pdtm - ProjectDiscovery Tool Manager
+# Install pdtm first, then use it to install all ProjectDiscovery tools
+RUN go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest && \
+  pdtm -install-all
+
+# feroxbuster
+RUN curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh | bash -s $HOME/.local/bin && \
+  ln -sf $HOME/.local/bin/feroxbuster /usr/local/bin/feroxbuster
 
 # ------------------------------
 # --- Wordlists ---
@@ -345,6 +344,7 @@ RUN sed -i 's^ZSH_THEME="robbyrussell"^ZSH_THEME="bira"^g' ~/.zshrc && \
   sed -i 's^# DISABLE_AUTO_UPDATE="true"^DISABLE_AUTO_UPDATE="true"^g' ~/.zshrc && \
   sed -i 's^plugins=(git)^plugins=(tmux nmap)^g' ~/.zshrc && \
   echo 'export EDITOR="nano"' >> ~/.zshrc && \
+  echo 'export PATH="$PATH:/root/.pdtm/go/bin"' >> ~/.zshrc && \
   git config --global oh-my-zsh.hide-info 1
 
 # Clean up space - remove version control
