@@ -99,9 +99,9 @@ RUN apt-get update && \
 # Install go
 RUN cd /opt && \
   ARCH=$( arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/ ) && \
-  wget https://dl.google.com/go/go1.21.1.linux-${ARCH}.tar.gz && \
-  tar -xvf go1.21.1.linux-${ARCH}.tar.gz && \
-  rm -rf /opt/go1.21.1.linux-${ARCH}.tar.gz && \
+  wget https://dl.google.com/go/go1.26.5.linux-${ARCH}.tar.gz && \
+  tar -xvf go1.26.5.linux-${ARCH}.tar.gz && \
+  rm -rf /opt/go1.26.5.linux-${ARCH}.tar.gz && \
   mv go /usr/local
 
 # Install Python common dependencies
@@ -116,7 +116,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # ------------------------------
 
 # amass
-RUN go install -v github.com/owasp-amass/amass/v3/...@master
+RUN go install -v github.com/owasp-amass/amass/v4/...@master
 
 # breach-parse
 RUN git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
@@ -173,7 +173,7 @@ RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlac
   ln -sf $TOOLS/interlace/Interlace/interlace.py /usr/local/bin/interlace
 
 # john the ripper
-RUN git clone --depth 1 https://github.com/magnumripper/JohnTheRipper $TOOLS/john && \
+RUN git clone --depth 1 https://github.com/openwall/john $TOOLS/john && \
   cd $TOOLS/john/src && \
   echo "alias john='${TOOLS}/john/run/john'" >> ~/.zshrc && \
   ./configure && make -s clean && make -sj4
@@ -211,7 +211,7 @@ RUN mkdir $TOOLS/metasploit && \
   ./msfinstall
 
 # nuclei
-RUN go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest && \
+RUN go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest && \
   git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
 # pagodo
@@ -298,7 +298,7 @@ RUN curl -L https://github.com/praetorian-code/Hob0Rules/raw/db10d30b0e4295a648b
   gunzip $WORDLISTS/rockyou.txt.gz
 
 # Symlink other wordlists
-RUN ln -sf $( find /go/pkg/mod/github.com/\!o\!w\!a\!s\!p/\!amass -name wordlists ) $WORDLISTS/amass && \
+RUN ln -sf "$( find /go/pkg/mod/github.com/owasp-amass -name wordlists -type d 2>/dev/null | head -1 )" $WORDLISTS/amass 2>/dev/null; \
   ln -sf /usr/share/brutespray/wordlist $WORDLISTS/brutespray && \
   ln -sf /usr/share/dirb/wordlists $WORDLISTS/dirb && \
   ln -sf /usr/share/setoolkit/src/fasttrack/wordlist.txt $WORDLISTS/fasttrack.txt && \

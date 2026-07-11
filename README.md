@@ -140,7 +140,7 @@ docker run -it mcnamee/huntkit
 | [breach-parse](https://github.com/hmaverickadams/breach-parse) | _A tool for parsing breached passwords._<br> `breach-parse @tesla.com tesla.txt "~/Downloads/BreachCompilation/data"` |
 | [crunch](https://tools.kali.org/password-attacks/crunch) | _Wordlist generator where you can specify a standard character set or a character set you specify._ <br> `crunch 6 6 0123456789abcdef -o 6chars.txt` |
 | [cupp](https://github.com/Mebus/cupp) | _Personal wordlist generator._ <br> `cupp -i` |
-| [john](https://github.com/magnumripper/JohnTheRipper) | _John the Ripper is a fast password cracker._ <br> `zip2john filename.zip > hash.txt`<br> `john hash.txt` |
+| [john](https://github.com/openwall/john) | _John the Ripper is a fast password cracker._ <br> `zip2john filename.zip > hash.txt`<br> `john hash.txt` |
 | [jwttool](https://github.com/ticarpi/jwt_tool) | _A toolkit for validating, forging and cracking JWTs (JSON Web Tokens)._ <br> `jwttool eyJ0eXAiOiJ.eyJsb2dpbi.aqNCvShlN -A` |
 | [metasploit](https://tools.kali.org/exploitation-tools/metasploit-framework) | _A penetration testing platform that enables you to find, exploit, and validate vulnerabilities.._ <br> `msfconsole` |
 | [hydra](https://tools.kali.org/password-attacks/hydra) | <code>hydra -f -l email@admin.com -P $WORDLISTS/seclists/Passwords/darkweb2017-top1000.txt website.com http-post-form "/login:user=^USER^&pass=^PASS^:Failed"</code> |
