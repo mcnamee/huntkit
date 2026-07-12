@@ -196,11 +196,25 @@ git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/mass
 go install -v github.com/tomnomnom/meg@v0.3.0
 
 # metasploit
+
+# msfinstall pulls from downloads.metasploit.com's apt repo, which
+
+# intermittently serves a mismatched index ("File has unexpected size ...
+
+# Mirror sync in progress?"). Retry a few times, then verify msfconsole is
+
+# actually installed so a persistent failure still fails the build.
 mkdir $TOOLS/metasploit && \
   cd $TOOLS/metasploit && \
-  curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
+  curl -fsSL https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
   chmod 755 msfinstall && \
-  ./msfinstall
+  for i in 1 2 3 4 5; do \
+    ./msfinstall && break; \
+    echo "msfinstall attempt $i failed; clearing apt lists and retrying in 20s..."; \
+    rm -rf /var/lib/apt/lists/*; \
+    sleep 20; \
+  done && \
+  { command -v msfconsole >/dev/null || [ -x /opt/metasploit-framework/bin/msfconsole ]; }
 
 # nuclei
 go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@v3.11.0 && \
