@@ -108,7 +108,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # --- Tools ---
 
 # amass
-go install -v github.com/owasp-amass/amass/v4/...@master
+go install -v github.com/owasp-amass/amass/v4/...@v4.2.0
 
 # breach-parse
 git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
@@ -130,7 +130,7 @@ git clone --depth 1 https://github.com/Mebus/cupp.git $TOOLS/cupp && \
   ln -sf $TOOLS/cupp/cupp.py /usr/local/bin/cupp
 
 # dalfox
-go install github.com/hahwul/dalfox/v2@latest
+go install github.com/hahwul/dalfox/v2@v2.13.0
 
 # dnmasscan
 git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan && \
@@ -139,22 +139,22 @@ git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan 
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
 # dnsprobe
-go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
+go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@v1.2.3
 
 # exploitdb (searchsploit)
-git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
+git clone --depth 1 https://gitlab.com/exploit-database/exploitdb.git $TOOLS/exploitdb && \
   cd $TOOLS/exploitdb && \
   ln -sf $TOOLS/exploitdb/searchsploit /usr/bin/searchsploit
 
 # fuff
-go install github.com/ffuf/ffuf@latest
+go install github.com/ffuf/ffuf@v1.5.0
 
 # gau
-go install github.com/lc/gau/v2/cmd/gau@latest && \
+go install github.com/lc/gau/v2/cmd/gau@v2.2.4 && \
   echo "alias gau='/go/bin/gau'" >> ~/.zshrc
 
 # httpx
-go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@v1.10.0
 
 # interlace
 git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
@@ -193,17 +193,31 @@ git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/mass
   ln -sf $TOOLS/masscan/bin/masscan /usr/local/bin/masscan
 
 # meg
-go install -v github.com/tomnomnom/meg@latest
+go install -v github.com/tomnomnom/meg@v0.3.0
 
 # metasploit
+
+# msfinstall pulls from downloads.metasploit.com's apt repo, which
+
+# intermittently serves a mismatched index ("File has unexpected size ...
+
+# Mirror sync in progress?"). Retry a few times, then verify msfconsole is
+
+# actually installed so a persistent failure still fails the build.
 mkdir $TOOLS/metasploit && \
   cd $TOOLS/metasploit && \
-  curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
+  curl -fsSL https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
   chmod 755 msfinstall && \
-  ./msfinstall
+  for i in 1 2 3 4 5; do \
+    ./msfinstall && break; \
+    echo "msfinstall attempt $i failed; clearing apt lists and retrying in 20s..."; \
+    rm -rf /var/lib/apt/lists/*; \
+    sleep 20; \
+  done && \
+  { command -v msfconsole >/dev/null || [ -x /opt/metasploit-framework/bin/msfconsole ]; }
 
 # nuclei
-go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest && \
+go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@v3.11.0 && \
   git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
 # pagodo
@@ -229,10 +243,10 @@ git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $TOOLS
   python3 setup.py || :
 
 # subfinder
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@v2.14.0
 
 # subjs
-go install -v github.com/lc/subjs@latest
+go install -v github.com/lc/subjs@v1.0.1
 
 # sublist3r
 git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r && \
@@ -251,7 +265,7 @@ git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester &
   ln -sf /usr/local/bin/theHarvester /usr/local/bin/theharvester
 
 # unfurl
-go install -v github.com/tomnomnom/unfurl@latest
+go install -v github.com/tomnomnom/unfurl@v0.4.3
 
 # wafw00f
 python3 -m pip install --break-system-packages wafw00f

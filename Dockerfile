@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:26.04
 
 LABEL maintainer="Matt McNamee"
 
@@ -117,7 +117,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # ------------------------------
 
 # amass
-RUN go install -v github.com/owasp-amass/amass/v4/...@master
+RUN go install -v github.com/owasp-amass/amass/v4/...@v4.2.0
 
 # breach-parse
 RUN git clone --depth 1 https://github.com/hmaverickadams/breach-parse.git $TOOLS/breach-parse && \
@@ -139,7 +139,7 @@ RUN git clone --depth 1 https://github.com/Mebus/cupp.git $TOOLS/cupp && \
   ln -sf $TOOLS/cupp/cupp.py /usr/local/bin/cupp
 
 # dalfox
-RUN go install github.com/hahwul/dalfox/v2@latest
+RUN go install github.com/hahwul/dalfox/v2@v2.13.0
 
 # dnmasscan
 RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmasscan && \
@@ -148,22 +148,22 @@ RUN git clone --depth 1 https://github.com/rastating/dnmasscan.git $TOOLS/dnmass
   ln -sf $TOOLS/dnmasscan/dnmasscan /usr/local/bin/dnmasscan
 
 # dnsprobe
-RUN go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
+RUN go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@v1.2.3
 
 # exploitdb (searchsploit)
-RUN git clone --depth 1 https://github.com/offensive-security/exploitdb.git $TOOLS/exploitdb && \
+RUN git clone --depth 1 https://gitlab.com/exploit-database/exploitdb.git $TOOLS/exploitdb && \
   cd $TOOLS/exploitdb && \
   ln -sf $TOOLS/exploitdb/searchsploit /usr/bin/searchsploit
 
 # fuff
-RUN go install github.com/ffuf/ffuf@latest
+RUN go install github.com/ffuf/ffuf@v1.5.0
 
 # gau
-RUN go install github.com/lc/gau/v2/cmd/gau@latest && \
+RUN go install github.com/lc/gau/v2/cmd/gau@v2.2.4 && \
   echo "alias gau='/go/bin/gau'" >> ~/.zshrc
 
 # httpx
-RUN go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+RUN go install -v github.com/projectdiscovery/httpx/cmd/httpx@v1.10.0
 
 # interlace
 RUN git clone --depth 1 https://github.com/codingo/Interlace.git $TOOLS/interlace && \
@@ -202,17 +202,27 @@ RUN git clone --depth 1 https://github.com/robertdavidgraham/masscan.git $TOOLS/
   ln -sf $TOOLS/masscan/bin/masscan /usr/local/bin/masscan
 
 # meg
-RUN go install -v github.com/tomnomnom/meg@latest
+RUN go install -v github.com/tomnomnom/meg@v0.3.0
 
 # metasploit
+# msfinstall pulls from downloads.metasploit.com's apt repo, which
+# intermittently serves a mismatched index ("File has unexpected size ...
+# Mirror sync in progress?"). Retry a few times, then verify msfconsole is
+# actually installed so a persistent failure still fails the build.
 RUN mkdir $TOOLS/metasploit && \
   cd $TOOLS/metasploit && \
-  curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
+  curl -fsSL https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
   chmod 755 msfinstall && \
-  ./msfinstall
+  for i in 1 2 3 4 5; do \
+    ./msfinstall && break; \
+    echo "msfinstall attempt $i failed; clearing apt lists and retrying in 20s..."; \
+    rm -rf /var/lib/apt/lists/*; \
+    sleep 20; \
+  done && \
+  { command -v msfconsole >/dev/null || [ -x /opt/metasploit-framework/bin/msfconsole ]; }
 
 # nuclei
-RUN go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest && \
+RUN go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@v3.11.0 && \
   git clone --depth 1 https://github.com/projectdiscovery/nuclei-templates.git $ADDONS/nuclei
 
 # pagodo
@@ -238,10 +248,10 @@ RUN git clone --depth 1 https://github.com/trustedsec/social-engineer-toolkit $T
   python3 setup.py || :
 
 # subfinder
-RUN go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+RUN go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@v2.14.0
 
 # subjs
-RUN go install -v github.com/lc/subjs@latest
+RUN go install -v github.com/lc/subjs@v1.0.1
 
 # sublist3r
 RUN git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r && \
@@ -259,7 +269,7 @@ RUN git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvest
   ln -sf /usr/local/bin/theHarvester /usr/local/bin/theharvester
 
 # unfurl
-RUN go install -v github.com/tomnomnom/unfurl@latest
+RUN go install -v github.com/tomnomnom/unfurl@v0.4.3
 
 # wafw00f
 RUN python3 -m pip install --break-system-packages wafw00f

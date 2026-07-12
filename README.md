@@ -79,6 +79,23 @@ docker run -it mcnamee/huntkit
 </details>
 
 <details>
+  <summary>Test it (smoke test)</summary>
+
+  After building, verify every tool is installed and the key tools run:
+
+  ```bash
+  docker run --rm \
+    -v "$PWD/tests:/tests" \
+    --entrypoint bash \
+    mcnamee/huntkit /tests/smoke.sh
+  ```
+
+  This is the same check CI runs on every pull request (see
+  `.github/workflows/ci.yml`), so a broken tool is caught without anyone
+  eyeballing the build.
+</details>
+
+<details>
   <summary>Push to Docker Hub</summary>
 
   ```bash
