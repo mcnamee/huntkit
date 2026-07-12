@@ -22,8 +22,8 @@ RUN mkdir $WORDLISTS && mkdir $ADDONS
 # ------------------------------
 
 # Install Essentials
-RUN apt update && \
-  apt install -y --no-install-recommends --fix-missing \
+RUN apt-get update -o Acquire::Retries=3 && \
+  apt-get install -y --no-install-recommends --fix-missing -o Acquire::Retries=3 \
   apt-utils \
   # awscli \
   build-essential \
@@ -59,8 +59,8 @@ RUN apt update && \
   rm -rf /var/lib/apt/lists/*
 
 # Install tools & dependencies
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends --fix-missing \
+RUN apt-get update -o Acquire::Retries=3 && \
+  apt-get install -y --no-install-recommends --fix-missing -o Acquire::Retries=3 \
   brutespray \
   crunch \
   dirb \
@@ -85,7 +85,6 @@ RUN apt-get update && \
   sherlock \
   # wpscan
   libcurl4-openssl-dev \
-  libxml2 \
   libxml2-dev \
   libxslt1-dev \
   ruby-dev \
