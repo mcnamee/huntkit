@@ -17,8 +17,8 @@ mkdir $WORDLISTS && mkdir $ADDONS
 # --- Common Dependencies ---
 
 # Install Essentials
-apt update && \
-  apt install -y --no-install-recommends --fix-missing \
+apt-get update -o Acquire::Retries=3 && \
+  apt-get install -y --no-install-recommends --fix-missing -o Acquire::Retries=3 \
   apt-utils \
   # awscli \
   build-essential \
@@ -53,8 +53,8 @@ apt update && \
   echo "Placeholder"
 
 # Install tools & dependencies
-apt-get update && \
-  apt-get install -y --no-install-recommends --fix-missing \
+apt-get update -o Acquire::Retries=3 && \
+  apt-get install -y --no-install-recommends --fix-missing -o Acquire::Retries=3 \
   brutespray \
   crunch \
   dirb \
@@ -79,7 +79,6 @@ apt-get update && \
   sherlock \
   # wpscan
   libcurl4-openssl-dev \
-  libxml2 \
   libxml2-dev \
   libxslt1-dev \
   ruby-dev \
