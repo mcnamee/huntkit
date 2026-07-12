@@ -21,15 +21,23 @@ docker run -it -v ~/Loot:/root/loot --cap-add=NET_ADMIN --device=/dev/net/tun -p
 # Regenerate the bare-metal Ubuntu installer from the Dockerfile (see below)
 ./docker-to-bash.sh
 
+# Smoke-test a built image (checks every tool is present + a critical subset runs)
+docker run --rm -v "$PWD/tests:/tests" --entrypoint bash mcnamee/huntkit /tests/smoke.sh
+
 # Push to Docker Hub
 docker build . -t mcnamee/huntkit && docker login && docker push mcnamee/huntkit
 ```
 
-There is no test suite, linter, or build system beyond Docker. Verify changes by building the image and running the affected tool inside the container.
+The smoke test in `tests/smoke.sh` is the closest thing to a test suite — CI
+(`.github/workflows/ci.yml`) builds the image with a layer cache and runs it on
+every PR. When adding a tool, add it to `tests/smoke.sh` too. Beyond that, verify
+changes by building the image and running the affected tool inside the container.
 
 ## Architecture / key facts
 
 - **`Dockerfile` is the source of truth.** It is organized into commented sections: Common Dependencies → Tools → Wordlists → Other utilities → Config. Each tool is its own `RUN` layer. The install pattern for git-based tools is consistent: `git clone --depth 1` into `$TOOLS`, install deps, `chmod +x`, then `ln -sf` a symlink into `/usr/local/bin` so the tool is on `PATH`. Go tools use `go install`. Match the surrounding style when adding a tool.
+
+- **The base image and Go tools are pinned.** `FROM ubuntu:26.04` (not `ubuntu` / `latest`) so the base can't silently jump releases and break the build, and each `go install` targets a specific `@vX.Y.Z` tag for reproducible, cache-stable builds. Bumping a version is a deliberate edit. The git-cloned tools (exploit content, wordlists) still track `master` on purpose — the smoke test is the safety net that catches when an upstream change breaks the build.
 
 - **`install-in-ubuntu.sh` is GENERATED, never edit it by hand.** `docker-to-bash.sh` transforms the `Dockerfile` into this bash script (stripping `FROM`/`LABEL`/`WORKDIR`/`COPY`/`ENTRYPOINT`/`CMD`, converting `RUN`→plain commands and `ENV`→`export`) so HuntKit can be installed directly on a raw Ubuntu host too big/small for Docker. After changing the `Dockerfile`, re-run `./docker-to-bash.sh` to keep it in sync.
 
@@ -39,6 +47,6 @@ There is no test suite, linter, or build system beyond Docker. Verify changes by
 
 - **Python installs use `--break-system-packages`** because the base Ubuntu enforces PEP 668; keep this flag on any new `pip install`. Several Python tools rewrite their shebang from `#!/usr/bin/env python` to `#!/usr/bin/python3` via `sed`.
 
-- **Publishing** is manual: the `.github/workflows/docker-hub.yml` GitHub Action is `workflow_dispatch`-only (no automatic build on push) and builds `linux/amd64,linux/arm64` via Buildx/QEMU, tagging `mcnamee/huntkit:latest`. Docker Hub credentials come from repo secrets.
+- **CI vs publishing are separate workflows.** `.github/workflows/ci.yml` runs on every PR/push: it builds the amd64 image with a GitHub Actions layer cache and runs `tests/smoke.sh` against it — no push, just fast feedback. `.github/workflows/docker-hub.yml` is the `workflow_dispatch`-only publish: it builds `linux/amd64` and `linux/arm64` on **native** runners (`ubuntu-latest` + `ubuntu-24.04-arm`, no QEMU) with per-arch caches, pushes each by digest, then merges them into the `mcnamee/huntkit:latest` manifest list. Docker Hub credentials come from repo secrets.
 
 - **The README tool tables are documentation of what's installed.** When you add or remove a tool in the `Dockerfile`, update the corresponding row (with a usage example) in `README.md`.
