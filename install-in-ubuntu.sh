@@ -41,6 +41,8 @@ apt-get update -o Acquire::Retries=3 && \
   proxychains4 \
   python3 \
   python3-pip \
+  python3-setuptools \
+  python3-wheel \
   ssh \
   tor \
   tmux \
@@ -245,11 +247,8 @@ git clone --depth 1 https://github.com/aboul3la/Sublist3r.git $TOOLS/sublist3r &
 # Note: it needs to be installed in /etc/ as there are absolute refs in the code
 git clone --depth 1 https://github.com/laramies/theHarvester /etc/theHarvester && \
   cd /etc/theHarvester && \
-  python3 -m pip install --break-system-packages pipenv && \
-  python3 -m pip install --break-system-packages -r requirements/base.txt && \
-  sed -i 's^#!/usr/bin/env python3^#!/usr/bin/python3^g' theHarvester.py && \
-  chmod a+x theHarvester.py && \
-  ln -sf /etc/theHarvester/theHarvester.py /usr/local/bin/theharvester
+  python3 -m pip install --break-system-packages --ignore-installed . && \
+  ln -sf /usr/local/bin/theHarvester /usr/local/bin/theharvester
 
 # unfurl
 go install -v github.com/tomnomnom/unfurl@latest
@@ -294,7 +293,7 @@ ln -sf "$( find /go/pkg/mod/github.com/owasp-amass -name wordlists -type d 2>/de
   ln -sf /usr/share/setoolkit/src/fasttrack/wordlist.txt $WORDLISTS/fasttrack.txt && \
   ln -sf /opt/metasploit-framework/embedded/framework/data/wordlists $WORDLISTS/metasploit && \
   ln -sf /usr/share/nmap/nselib/data/passwords.lst $WORDLISTS/nmap.lst && \
-  ln -sf /etc/theHarvester/wordlists $WORDLISTS/theharvester
+  ln -sf /etc/theHarvester/theHarvester/data/wordlists $WORDLISTS/theharvester
 
 # --- Other utilities ---
 
